@@ -156,7 +156,8 @@ const App = ({ locations }) => {
                     };
 
                     return (
-                      <div {...getSuggestionItemProps(suggestion, { style })}>
+                      <div key={suggestion.description}
+                           {...getSuggestionItemProps(suggestion, { style })}>
                         {suggestion.description}
                       </div>
                     );

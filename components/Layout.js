@@ -4,7 +4,9 @@ const Layout = ({ children }) => {
   return (
     <div className="content">
       <Header />
-      { children }
+      <div className="padding-top">
+        { children }
+      </div>
     </div>
   );
 }

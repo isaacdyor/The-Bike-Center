@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import {GoogleMap, useLoadScript, Marker, InfoWindow, Circle, } from "@react-google-maps/api";
+import {GoogleMap, useLoadScript, Marker, InfoWindow,} from "@react-google-maps/api";
 import PlacesAutocomplete, {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
 
 import Script from "next/script";
@@ -15,7 +15,7 @@ export const getServerSideProps = async () => {
   return { props: { locations, volunteers } };
 }
 
-const App = ({ locations, volunteers }) => {
+const App = ({ locations, volunteer }) => {
 
   const [center, setCenter] = useState({
     lat: 47.606209,
@@ -31,8 +31,6 @@ const App = ({ locations, volunteers }) => {
   const [mapRef, setMapRef] = useState(null);
 
   const [selected, setSelected] = useState(null);
-
-  const [volSelected, setVolSelected] = useState(null);
 
   const mapRef2 = useRef();
 
@@ -101,9 +99,6 @@ const App = ({ locations, volunteers }) => {
     {locations.map(location => {
       convertLocation(location)
     })}
-    {volunteers.map(volunteer => {
-      convertVolunteer(volunteer)
-    })}
   }
 
   const panTo = React.useCallback(({lat, lng}) => {
@@ -131,7 +126,6 @@ const App = ({ locations, volunteers }) => {
           // onBoundsChanged={onCenterChanged}
         >
           {coords.map(coord => {
-            console.log(coord)
             return(
               <Marker
                 key={coord.lat}
@@ -139,80 +133,40 @@ const App = ({ locations, volunteers }) => {
                 onClick={() => {
                   onCenterChanged()
                   setSelected(coord);
-                  setVolSelected(null);
-                }}
-                icon={{
-                  url: '/building-solid.svg',
-                  origin: new window.google.maps.Point(0, 0),
-                  anchor: new window.google.maps.Point(15, 15),
-                  scaledSize: new window.google.maps.Size(30, 30),
                 }}
               />
             )
           })}
           {volCoords.map(volCoord => {
-            console.log(volCoord)
             return(
               <Marker
                 key={volCoord.lat}
                 position={{ lat: parseFloat(volCoord.lat), lng: parseFloat(volCoord.lng) }}
                 onClick={() => {
                   onCenterChanged()
-                  setVolSelected(volCoord);
-                  setSelected(null)
-                }}
-                icon={{
-                  url: '/user -solid.svg',
-                  origin: new window.google.maps.Point(0, 0),
-                  anchor: new window.google.maps.Point(15, 15),
-                  scaledSize: new window.google.maps.Size(30, 30),
+                  setSelected(volCoord);
                 }}
               />
             )
           })}
-          {selected ? (
-            <InfoWindow
-              position={{ lat: selected.lat, lng: selected.lng }}
-              onCloseClick={() => {
-                setSelected(null);
-              }}
-            >
-              <div>
-                <h2>
-                  {selected.title}
-                </h2>
-                <p>{selected.address}</p>
-                <p>{selected.phone}</p>
-                <a href={selected.website}>More Info</a>
-              </div>
-            </InfoWindow>
-          ) : null
-          }
-          {volSelected ? (
-            <div>
-              <InfoWindow
-                position={{ lat: volSelected.lat, lng: volSelected.lng }}
-                onCloseClick={() => {
-                  setVolSelected(null);
-                }}
-              >
-                <div>
-                  <h2>
-                    {volSelected.name}
-                  </h2>
-                  <p>{volSelected.address}</p>
-                  <p>{volSelected.phone}</p>
-                  <p>{volSelected.notes}</p>
-                </div>
-              </InfoWindow>
-              <Circle
-                center={{ lat: volSelected.lat, lng: volSelected.lng }}
-                radius={parseFloat(volSelected.radius) * 1609.34}
-              />
-            </div>
-
-          ) : null
-          }
+          {/*{selected ? (*/}
+          {/*  <InfoWindow*/}
+          {/*    position={{ lat: selected.lat, lng: selected.lng }}*/}
+          {/*    onCloseClick={() => {*/}
+          {/*      setSelected(null);*/}
+          {/*    }}*/}
+          {/*  >*/}
+          {/*    <div>*/}
+          {/*      <h2>*/}
+          {/*        {selected.title}*/}
+          {/*      </h2>*/}
+          {/*      <p>{selected.address}</p>*/}
+          {/*      <p>{selected.phone}</p>*/}
+          {/*      <a href={selected.website}>More Info</a>*/}
+          {/*    </div>*/}
+          {/*  </InfoWindow>*/}
+          {/*) : null*/}
+          {/*}*/}
 
         </GoogleMap>
 

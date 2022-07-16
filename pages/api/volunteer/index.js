@@ -13,6 +13,7 @@ export default async function handle(req, res) {
       radius: radius,
       phone: phone,
       notes: notes,
+      user: { connect: { email: session?.user?.email } }
     },
   });
   res.json(result);

@@ -4,34 +4,56 @@ import PlacesAutocomplete from 'react-places-autocomplete'
 import Script from "next/script";
 import Link from 'next/link';
 import {useSession} from "next-auth/react";
+import prisma from "../../../lib/prisma";
+import {useLoadScript} from "@react-google-maps/api";
 
-const Volunteer = () => {
-  const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
-  const [radius, setRadius] = useState('');
-  const [phone, setPhone] = useState('');
-  const [notes, setNotes] = useState('');
+export const getServerSideProps = async ({ params }) => {
+  const volunteer = await prisma.volunteer.findUnique({
+    where: {
+      userId: String(params?.id),
+    },
+  });
+  return {
+    props: volunteer,
+  };
+};
+
+const libraries = ['places']
+
+const Edit = (props) => {
+  const [name, setName] = useState(props.name);
+  const [address, setAddress] = useState(props.address);
+  const [radius, setRadius] = useState(props.radius);
+  const [phone, setPhone] = useState(props.phone);
+  const [notes, setNotes] = useState(props.notes);
+  const [id, setId] = useState(props.userId);
   const { data: session, status } = useSession();
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY,
+    libraries,
+  })
 
   const submitData = async (e) => {
     e.preventDefault();
     try {
-      const body = { name, address, radius, phone, notes };
-      const response = await fetch('/api/volunteer', {
-        method: 'POST',
+      const body = { name, address, radius, phone, notes, id };
+      const response = await fetch(`/api/edit/${id}`, {
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
       const data = await response.json()
-      await Router.push('/map');
+      await Router.push(`/profile/${props.userId}`);
     } catch (error) {
       console.error(error);
     }
   };
-  if (!session) {
+  if (session?.user?.id !== props.userId) {
     return(
       <div>
-        <p>Please <Link href="/api/auth/signin"><a>log in</a></Link> to signup as a volunteer</p>
+        <p>This is not your account</p>
+
       </div>
     )
   }
@@ -43,14 +65,12 @@ const Volunteer = () => {
         <input
           autoFocus
           onChange={(e) => setName(e.target.value)}
-          placeholder="Name"
           type="text"
           value={name}
         />
         <PlacesAutocomplete
           value={address}
           onChange={setAddress}
-          // onSelect={handleSelect}
         >
           {({ getInputProps, suggestions, getSuggestionItemProps }) => (
             <div>
@@ -94,18 +114,14 @@ const Volunteer = () => {
           rows={8}
           value={notes}
         />
-        <input disabled={!name || !address} type="submit" value="Create" />
-        <a className="back" href="#" onClick={() => Router.push('/')}>
+        <input disabled={!name || !address} type="submit" value="Edit" />
+        <a className="back" href="#" onClick={() => Router.push(`/profile/${props.userId}`)}>
           or Cancel
         </a>
       </form>
-      <Script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMePTwqFO2xPCaxUYqq0Vq4JQc631jo0o&libraries=places"
-        strategy="beforeInteractive"
-      ></Script>
     </div>
   )
 }
 
-export default Volunteer;
+export default Edit;
 

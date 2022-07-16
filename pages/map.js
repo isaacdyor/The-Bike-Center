@@ -1,8 +1,6 @@
 import React, {useState, useRef} from 'react';
 import {GoogleMap, useLoadScript, Marker, InfoWindow, Circle, } from "@react-google-maps/api";
 import PlacesAutocomplete, {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
-
-import Script from "next/script";
 import prisma from "../lib/prisma";
 
 import { FaLocationArrow } from 'react-icons/fa';
@@ -23,17 +21,11 @@ const App = ({ locations, volunteers }) => {
   });
 
   const [address, setAddress] = useState("");
-
   const [coords, setCoords] = useState([]);
-
   const [volCoords, setVolCoords] = useState([]);
-
   const [mapRef, setMapRef] = useState(null);
-
   const [selected, setSelected] = useState(null);
-
   const [volSelected, setVolSelected] = useState(null);
-
   const mapRef2 = useRef();
 
   const options = {
@@ -85,15 +77,12 @@ const App = ({ locations, volunteers }) => {
   const onCenterChanged = () => {
     if (mapRef) {
       const newCenter = mapRef.getCenter();
-      console.log(newCenter);
       setCenter({
         lat: mapRef.getCenter().lat(),
         lng: mapRef.getCenter().lng()
       })
     }
   }
-
-
 
   const onMapLoad = (map) => {
     mapRef2.current = map
@@ -131,7 +120,6 @@ const App = ({ locations, volunteers }) => {
           // onBoundsChanged={onCenterChanged}
         >
           {coords.map(coord => {
-            console.log(coord)
             return(
               <Marker
                 key={coord.lat}
@@ -151,7 +139,6 @@ const App = ({ locations, volunteers }) => {
             )
           })}
           {volCoords.map(volCoord => {
-            console.log(volCoord)
             return(
               <Marker
                 key={volCoord.lat}
@@ -210,15 +197,11 @@ const App = ({ locations, volunteers }) => {
                 radius={parseFloat(volSelected.radius) * 1609.34}
               />
             </div>
-
           ) : null
           }
-
         </GoogleMap>
 
         <div className="input-container">
-
-
           <PlacesAutocomplete
             value={address}
             onChange={setAddress}
@@ -227,7 +210,6 @@ const App = ({ locations, volunteers }) => {
             {({ getInputProps, suggestions, getSuggestionItemProps }) => (
               <div className="search">
                 <input {...getInputProps({ placeholder: "Type address" })} />
-
                 <div>
                   {suggestions.map(suggestion => {
                     const style = {
@@ -260,17 +242,10 @@ const App = ({ locations, volunteers }) => {
                 })
               }, () => null);
             }}><FaLocationArrow /></button>
-
         </div>
-
-        <Script
-          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMePTwqFO2xPCaxUYqq0Vq4JQc631jo0o&libraries=places"
-          strategy="beforeInteractive"
-        ></Script>
       </div>
     )
   }
 }
-
 
 export default App;

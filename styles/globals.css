@@ -26,6 +26,7 @@ code {
 .map-container {
     height: 93vh;
     width: 100vw;
+    z-index: -2;
 }
 
 .search {
@@ -64,7 +65,7 @@ code {
     transform: translateX(-50%);
     width: 100%;
     max-width: 400px;
-    z-index: 10;
+    z-index: -1;
 }
 
 .page {

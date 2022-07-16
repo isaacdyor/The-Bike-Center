@@ -1,7 +1,7 @@
 import React, {useState, useRef} from 'react';
 import {GoogleMap, useLoadScript, Marker, InfoWindow, Circle, } from "@react-google-maps/api";
 import PlacesAutocomplete, {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
-import prisma from "../lib/prisma";
+import prisma from "../../lib/prisma";
 
 import { FaLocationArrow } from 'react-icons/fa';
 
@@ -9,7 +9,11 @@ const libraries = ['places']
 
 export const getServerSideProps = async () => {
   const locations = await prisma.location.findMany();
-  const volunteers = await prisma.volunteer.findMany();
+  const volunteers = await prisma.volunteer.findMany({
+    where: {
+      approved: true,
+    },
+  });
   return { props: { locations, volunteers } };
 }
 

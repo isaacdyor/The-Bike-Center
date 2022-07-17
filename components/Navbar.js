@@ -10,7 +10,7 @@ export const Header = (props) => {
 
   if (!session) {
     return(
-      <div>
+      <div className="map-navbar">
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
           <Navbar.Brand href="/">The Bike Center</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -27,7 +27,7 @@ export const Header = (props) => {
     )
   }
   return(
-    <div>
+    <div className="map-navbar">
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Navbar.Brand href="/">The Bike Center</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />

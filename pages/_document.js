@@ -9,10 +9,6 @@ export default function Document() {
       <body>
       <Main />
       <NextScript />
-      <Script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMePTwqFO2xPCaxUYqq0Vq4JQc631jo0o&libraries=places"
-        strategy="beforeInteractive"
-      ></Script>
       </body>
     </Html>
   )

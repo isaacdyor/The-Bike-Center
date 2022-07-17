@@ -59,6 +59,8 @@ model Location {
   address   String?
   website   String?
   phone     String?
+
+  volunteers Volunteer[]
 }
 
 model Volunteer {
@@ -72,5 +74,7 @@ model Volunteer {
 
   user     User @relation(fields: [userId], references: [id])
   userId   String  @unique
+
+  locations Location[]
 }
 

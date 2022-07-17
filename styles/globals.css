@@ -45,6 +45,11 @@ code {
     width: 100%;
 }
 
+.map-navbar {
+    position: relative;
+    z-index: 1;
+}
+
 .locate {
     position: relative;
     top: 5rem;
@@ -65,7 +70,7 @@ code {
     transform: translateX(-50%);
     width: 100%;
     max-width: 400px;
-    z-index: -1;
+    z-index: 0;
 }
 
 .page {

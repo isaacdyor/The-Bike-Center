@@ -4,25 +4,29 @@ import { useSession } from 'next-auth/react';
 import prisma from '../../lib/prisma';
 import Link from 'next/link'
 
-export const getServerSideProps = async (context) => {
-  try {
-    const volunteer = await prisma.volunteer.findUnique({
-      where: {
-        userId: String(params?.id),
-      },
-    });
+export const getServerSideProps = async ({params}) => {
+  const volunteer = await prisma.volunteer.findUnique({
+    where: {
+      userId: String(params?.id),
+    },
+    include: {
+      locations: true,
+    },
+  })
+  if (volunteer === null) {
+    return { props: {} }
+  } else {
     return {
       props: volunteer,
     };
-  } catch {
-    return { props: {} }
   }
 }
+
 
 const Profile = (props) => {
   const { data: session, status } = useSession();
 
-  console.log(props?.name === undefined)
+  console.log(props);
 
   const deleteData = async (e) => {
     // e.preventDefault();
@@ -60,6 +64,14 @@ const Profile = (props) => {
       <p>{props?.radius}</p>
       <p>{props?.phone}</p>
       <p>{props?.notes}</p>
+      <h5>Locations</h5>
+      {props?.locations.map(location => {
+        return(
+          <div key={location.id}>
+            <p>{location.title}</p>
+          </div>
+        )
+      })}
       <button onClick={() => Router.push(`/profile/edit/${props.userId}`)}>Edit</button>
       <button onClick={handleDelete}>Delete</button>
     </div>

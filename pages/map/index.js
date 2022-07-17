@@ -4,8 +4,7 @@ import PlacesAutocomplete, {geocodeByAddress, getLatLng} from 'react-places-auto
 import prisma from "../../lib/prisma";
 
 import { FaLocationArrow } from 'react-icons/fa';
-
-const libraries = ['places']
+const libraries = ["places"];
 
 export const getServerSideProps = async () => {
   const locations = await prisma.location.findMany();
@@ -17,8 +16,12 @@ export const getServerSideProps = async () => {
   return { props: { locations, volunteers } };
 }
 
-const App = ({ locations, volunteers }) => {
+const containerStyle = {
+  width: '100%',
+  height: '100%',
+};
 
+const App = ({ locations, volunteers }) => {
   const [center, setCenter] = useState({
     lat: 47.606209,
     lng: -122.332069,
@@ -39,7 +42,7 @@ const App = ({ locations, volunteers }) => {
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY,
-    libraries,
+    libraries
   })
 
   const handleSelect = async (value) => {
@@ -115,95 +118,97 @@ const App = ({ locations, volunteers }) => {
   if (isLoaded) {
     return(
       <div>
-        <GoogleMap
-          zoom={9}
-          center={{lat: center.lat, lng: center.lng}}
-          mapContainerClassName='map-container'
-          options={options}
-          onLoad={onMapLoad}
-          // onBoundsChanged={onCenterChanged}
-        >
-          {coords.map(coord => {
-            return(
-              <Marker
-                key={coord.lat}
-                position={{ lat: parseFloat(coord.lat), lng: parseFloat(coord.lng) }}
-                onClick={() => {
-                  onCenterChanged()
-                  setSelected(coord);
-                  setVolSelected(null);
-                }}
-                icon={{
-                  url: '/building-solid.svg',
-                  origin: new window.google.maps.Point(0, 0),
-                  anchor: new window.google.maps.Point(15, 15),
-                  scaledSize: new window.google.maps.Size(30, 30),
-                }}
-              />
-            )
-          })}
-          {volCoords.map(volCoord => {
-            return(
-              <Marker
-                key={volCoord.lat}
-                position={{ lat: parseFloat(volCoord.lat), lng: parseFloat(volCoord.lng) }}
-                onClick={() => {
-                  onCenterChanged()
-                  setVolSelected(volCoord);
-                  setSelected(null)
-                }}
-                icon={{
-                  url: '/user-solid.svg',
-                  origin: new window.google.maps.Point(0, 0),
-                  anchor: new window.google.maps.Point(15, 15),
-                  scaledSize: new window.google.maps.Size(30, 30),
-                }}
-              />
-            )
-          })}
-          {selected ? (
-            <InfoWindow
-              position={{ lat: selected.lat, lng: selected.lng }}
-              onCloseClick={() => {
-                setSelected(null);
-              }}
-            >
-              <div>
-                <h2>
-                  {selected.title}
-                </h2>
-                <p>{selected.address}</p>
-                <p>{selected.phone}</p>
-                <a href={selected.website}>More Info</a>
-              </div>
-            </InfoWindow>
-          ) : null
-          }
-          {volSelected ? (
-            <div>
+        <div className="map-container">
+          <GoogleMap
+            zoom={9}
+            center={{lat: center.lat, lng: center.lng}}
+            mapContainerStyle={containerStyle}
+            options={options}
+            onLoad={onMapLoad}
+            // onBoundsChanged={onCenterChanged}
+          >
+            {coords.map(coord => {
+              return(
+                <Marker
+                  key={coord.lat}
+                  position={{ lat: parseFloat(coord.lat), lng: parseFloat(coord.lng) }}
+                  onClick={() => {
+                    onCenterChanged()
+                    setSelected(coord);
+                    setVolSelected(null);
+                  }}
+                  icon={{
+                    url: '/building-solid.svg',
+                    origin: new window.google.maps.Point(0, 0),
+                    anchor: new window.google.maps.Point(15, 15),
+                    scaledSize: new window.google.maps.Size(30, 30),
+                  }}
+                />
+              )
+            })}
+            {volCoords.map(volCoord => {
+              return(
+                <Marker
+                  key={volCoord.lat}
+                  position={{ lat: parseFloat(volCoord.lat), lng: parseFloat(volCoord.lng) }}
+                  onClick={() => {
+                    onCenterChanged()
+                    setVolSelected(volCoord);
+                    setSelected(null)
+                  }}
+                  icon={{
+                    url: '/user-solid.svg',
+                    origin: new window.google.maps.Point(0, 0),
+                    anchor: new window.google.maps.Point(15, 15),
+                    scaledSize: new window.google.maps.Size(30, 30),
+                  }}
+                />
+              )
+            })}
+            {selected ? (
               <InfoWindow
-                position={{ lat: volSelected.lat, lng: volSelected.lng }}
+                position={{ lat: selected.lat, lng: selected.lng }}
                 onCloseClick={() => {
-                  setVolSelected(null);
+                  setSelected(null);
                 }}
               >
                 <div>
                   <h2>
-                    {volSelected.name}
+                    {selected.title}
                   </h2>
-                  <p>{volSelected.address}</p>
-                  <p>{volSelected.phone}</p>
-                  <p>{volSelected.notes}</p>
+                  <p>{selected.address}</p>
+                  <p>{selected.phone}</p>
+                  <a href={selected.website}>More Info</a>
                 </div>
               </InfoWindow>
-              <Circle
-                center={{ lat: volSelected.lat, lng: volSelected.lng }}
-                radius={parseFloat(volSelected.radius) * 1609.34}
-              />
-            </div>
-          ) : null
-          }
-        </GoogleMap>
+            ) : null
+            }
+            {volSelected ? (
+              <div>
+                <InfoWindow
+                  position={{ lat: volSelected.lat, lng: volSelected.lng }}
+                  onCloseClick={() => {
+                    setVolSelected(null);
+                  }}
+                >
+                  <div>
+                    <h2>
+                      {volSelected.name}
+                    </h2>
+                    <p>{volSelected.address}</p>
+                    <p>{volSelected.phone}</p>
+                    <p>{volSelected.notes}</p>
+                  </div>
+                </InfoWindow>
+                <Circle
+                  center={{ lat: volSelected.lat, lng: volSelected.lng }}
+                  radius={parseFloat(volSelected.radius) * 1609.34}
+                />
+              </div>
+            ) : null
+            }
+          </GoogleMap>
+        </div>
 
         <div className="input-container">
           <PlacesAutocomplete

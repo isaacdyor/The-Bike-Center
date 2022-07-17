@@ -1,8 +1,12 @@
 import prisma from '../../../lib/prisma';
 
-// PUT /api/publish/:id
 export default async function handle(req, res) {
-  const { name, address, radius, phone, notes, id } = req.body;
+  const { name, address, radius, phone, notes, id, selected } = req.body;
+
+  const connection = selected.map(location => {
+    return {id: location.id}
+  })
+
   const volunteer = await prisma.volunteer.update({
     where: { userId: id },
     data: {
@@ -11,6 +15,10 @@ export default async function handle(req, res) {
       radius: radius,
       phone: phone,
       notes: notes,
+      locations: {
+        set: [],
+        connect: connection
+      }
     },
   });
   res.json(volunteer);

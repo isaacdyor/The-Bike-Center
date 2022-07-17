@@ -1,22 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Router from 'next/router';
 import PlacesAutocomplete from 'react-places-autocomplete'
-import Script from "next/script";
 import Link from 'next/link';
 import {useSession} from "next-auth/react";
+import Multiselect from 'multiselect-react-dropdown';
+import prisma from "../lib/prisma";
+import {useLoadScript} from "@react-google-maps/api";
 
-const Volunteer = () => {
+const libraries = ['places']
+
+export const getServerSideProps = async (context) => {
+  const locations = await prisma.location.findMany();
+
+  return { props: { locations } }
+
+}
+
+const Volunteer = (props) => {
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY,
+    libraries
+  })
+
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [radius, setRadius] = useState('');
   const [phone, setPhone] = useState('');
   const [notes, setNotes] = useState('');
-  const { data: session, status } = useSession();
+  const [options, setOptions] = useState([])
+  const [selected, setSelected] = useState([])
+  const { data: session } = useSession();
 
   const submitData = async (e) => {
     e.preventDefault();
     try {
-      const body = { name, address, radius, phone, notes };
+      const body = { name, address, radius, phone, notes, selected };
+      console.log(selected)
       const response = await fetch('/api/volunteer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -28,6 +47,28 @@ const Volunteer = () => {
       console.error(error);
     }
   };
+  useEffect(() => {
+    props.locations.map(prop => {
+      const optionData = {
+        id: prop.id,
+        title: prop.title,
+        address: prop.address,
+        website: prop.website,
+        phone: prop.phone,
+      }
+      setOptions(options => [...options, optionData])
+    })
+  }, []);
+
+
+  const onSelect = (e) => {
+    setSelected(e)
+  }
+
+  const onRemove = (e) => {
+    setSelected(e)
+  }
+
   if (!session) {
     return(
       <div>
@@ -50,7 +91,6 @@ const Volunteer = () => {
         <PlacesAutocomplete
           value={address}
           onChange={setAddress}
-          // onSelect={handleSelect}
         >
           {({ getInputProps, suggestions, getSuggestionItemProps }) => (
             <div>
@@ -94,15 +134,20 @@ const Volunteer = () => {
           rows={8}
           value={notes}
         />
-        <input disabled={!name || !address} type="submit" value="Create" />
+        <Multiselect
+          displayValue="title"
+          onRemove={onRemove}
+          onSelect={onSelect}
+          options={options}
+          showCheckbox
+          placeholder="Please select the locations you will be donating to"
+        />
+
+        <input disabled={!name || !address || !radius} type="submit" value="Create" />
         <a className="back" href="#" onClick={() => Router.push('/')}>
           or Cancel
         </a>
       </form>
-      <Script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMePTwqFO2xPCaxUYqq0Vq4JQc631jo0o&libraries=places"
-        strategy="beforeInteractive"
-      ></Script>
     </div>
   )
 }

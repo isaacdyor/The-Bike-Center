@@ -73,6 +73,16 @@ code {
     z-index: 0;
 }
 
+.input-container2{
+    position: absolute;
+    top: 0rem;
+    left: 65%;
+    transform: translateX(-65%);
+    width: 100%;
+    max-width: 400px;
+    z-index: 0;
+}
+
 .page {
     /*background: var(--geist-background);*/
     padding: 3rem;
@@ -98,5 +108,19 @@ input[type='submit'] {
 
 .back {
     margin-left: 1rem;
+}
+
+.panel {
+    border: 1px solid;
+    float:left;
+}
+
+#sidebar {
+    width: 30%;
+    float:left;
+}
+
+#content {
+    flex: 1;
 }
 

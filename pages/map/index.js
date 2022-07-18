@@ -2,12 +2,15 @@ import React, {useState, useRef} from 'react';
 import {GoogleMap, useLoadScript, Marker, InfoWindow, Circle, } from "@react-google-maps/api";
 import PlacesAutocomplete, {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
 import prisma from "../../lib/prisma";
+import Link from 'next/link'
 
 import { FaLocationArrow } from 'react-icons/fa';
 const libraries = ["places"];
 
 export const getServerSideProps = async () => {
-  const locations = await prisma.location.findMany();
+  const locations = await prisma.location.findMany({
+
+  });
   const volunteers = await prisma.volunteer.findMany({
     where: {
       approved: true,
@@ -71,6 +74,7 @@ const App = ({ locations, volunteers }) => {
     const results = await geocodeByAddress(value.address);
     const latLng = await getLatLng(results[0]);
     const locationData = {
+      id: value.id,
       title: value.title,
       address: value.address,
       website: value.website,
@@ -125,7 +129,6 @@ const App = ({ locations, volunteers }) => {
             mapContainerStyle={containerStyle}
             options={options}
             onLoad={onMapLoad}
-            // onBoundsChanged={onCenterChanged}
           >
             {coords.map(coord => {
               return(
@@ -136,6 +139,7 @@ const App = ({ locations, volunteers }) => {
                     onCenterChanged()
                     setSelected(coord);
                     setVolSelected(null);
+                    console.log(selected)
                   }}
                   icon={{
                     url: '/building-solid.svg',
@@ -174,7 +178,7 @@ const App = ({ locations, volunteers }) => {
               >
                 <div>
                   <h2>
-                    {selected.title}
+                    <Link href={`/map/${selected.id}`}><a>{selected.title}</a></Link>
                   </h2>
                   <p>{selected.address}</p>
                   <p>{selected.phone}</p>

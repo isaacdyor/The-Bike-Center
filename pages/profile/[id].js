@@ -22,7 +22,6 @@ export const getServerSideProps = async ({params}) => {
   }
 }
 
-
 const Profile = (props) => {
   const { data: session, status } = useSession();
 

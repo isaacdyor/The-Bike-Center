@@ -24,10 +24,6 @@ export const getServerSideProps = async ({ params }) => {
 };
 
 const Edit = (props) => {
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY,
-    libraries
-  })
 
   const [name, setName] = useState(props.volunteer.name);
   const [address, setAddress] = useState(props.volunteer.address);
@@ -39,6 +35,8 @@ const Edit = (props) => {
   const [selected, setSelected] = useState([])
   const [preselected, setPreselected] = useState([])
   const { data: session } = useSession();
+
+  const sessionId = session?.user?.id
 
   useEffect(() => {
     props.locations.map(prop => {
@@ -86,87 +84,94 @@ const Edit = (props) => {
       console.error(error);
     }
   };
-  if (session?.user?.id !== props.volunteer.userId) {
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY,
+    libraries
+  })
+
+  {if (sessionId === props?.volunteer?.userId) {
     return(
       <div>
-        <p>This is not your account</p>
+        <form onSubmit={submitData}>
+          <h1>Become a Volunteer</h1>
+          <input
+            autoFocus
+            onChange={(e) => setName(e.target.value)}
+            type="text"
+            value={name}
+          />
+          <PlacesAutocomplete
+            value={address}
+            onChange={setAddress}
+          >
+            {({ getInputProps, suggestions, getSuggestionItemProps }) => (
+              <div>
+                <input {...getInputProps({ placeholder: "Type address" })} />
 
+                <div>
+                  {suggestions.map(suggestion => {
+                    const style = {
+                      backgroundColor: suggestion.active ? "#41b6e6" : "#fff"
+                    };
+
+                    return (
+                      <div key={suggestion.description}
+                           {...getSuggestionItemProps(suggestion, { style })}>
+                        {suggestion.description}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </PlacesAutocomplete>
+          <input
+            autoFocus
+            onChange={(e) => setRadius(e.target.value)}
+            placeholder="Radius"
+            type="number"
+            value={radius}
+          />
+          <input
+            autoFocus
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="Phone Number"
+            type="text"
+            value={phone}
+          />
+          <textarea
+            cols={50}
+            onChange={(e) => setNotes(e.target.value)}
+            placeholder="Notes"
+            rows={8}
+            value={notes}
+          />
+          <Multiselect
+            displayValue="title"
+            onRemove={onRemove}
+            onSelect={onSelect}
+            options={options}
+            showCheckbox
+            placeholder="Please select the locations you will be donating to"
+            selectedValues={preselected}
+          />
+          <input disabled={!name || !address} type="submit" value="Edit" />
+          <a className="back" href="#" onClick={() => Router.push(`/profile/${props.volunteer.userId}`)}>
+            or Cancel
+          </a>
+        </form>
+      </div>
+    )
+  } else {
+    return(
+      <div>
+        <p>Sorry this is not your account</p>
       </div>
     )
   }
+  }
 
-  return(
-    <div>
-      <form onSubmit={submitData}>
-        <h1>Become a Volunteer</h1>
-        <input
-          autoFocus
-          onChange={(e) => setName(e.target.value)}
-          type="text"
-          value={name}
-        />
-        <PlacesAutocomplete
-          value={address}
-          onChange={setAddress}
-        >
-          {({ getInputProps, suggestions, getSuggestionItemProps }) => (
-            <div>
-              <input {...getInputProps({ placeholder: "Type address" })} />
-
-              <div>
-                {suggestions.map(suggestion => {
-                  const style = {
-                    backgroundColor: suggestion.active ? "#41b6e6" : "#fff"
-                  };
-
-                  return (
-                    <div key={suggestion.description}
-                         {...getSuggestionItemProps(suggestion, { style })}>
-                      {suggestion.description}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-        </PlacesAutocomplete>
-        <input
-          autoFocus
-          onChange={(e) => setRadius(e.target.value)}
-          placeholder="Radius"
-          type="number"
-          value={radius}
-        />
-        <input
-          autoFocus
-          onChange={(e) => setPhone(e.target.value)}
-          placeholder="Phone Number"
-          type="text"
-          value={phone}
-        />
-        <textarea
-          cols={50}
-          onChange={(e) => setNotes(e.target.value)}
-          placeholder="Notes"
-          rows={8}
-          value={notes}
-        />
-        <Multiselect
-          displayValue="title"
-          onRemove={onRemove}
-          onSelect={onSelect}
-          options={options}
-          showCheckbox
-          placeholder="Please select the locations you will be donating to"
-          selectedValues={preselected}
-        />
-        <input disabled={!name || !address} type="submit" value="Edit" />
-        <a className="back" href="#" onClick={() => Router.push(`/profile/${props.volunteer.userId}`)}>
-          or Cancel
-        </a>
-      </form>
-    </div>
-  )
 }
 
 export default Edit;

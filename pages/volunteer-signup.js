@@ -12,11 +12,14 @@ const libraries = ['places']
 export const getServerSideProps = async (context) => {
   const locations = await prisma.location.findMany();
 
-  return { props: { locations } }
+  const volunteers = await prisma.volunteer.findMany()
+
+  return { props: { locations, volunteers } }
 
 }
 
-const Volunteer = (props) => {
+const Volunteer = ({locations, volunteers}) => {
+
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY,
     libraries
@@ -29,13 +32,14 @@ const Volunteer = (props) => {
   const [notes, setNotes] = useState('');
   const [options, setOptions] = useState([])
   const [selected, setSelected] = useState([])
+  const [loggedIn, setLoggedIn] = useState(false)
   const { data: session } = useSession();
+  console.log(session)
 
   const submitData = async (e) => {
     e.preventDefault();
     try {
       const body = { name, address, radius, phone, notes, selected };
-      console.log(selected)
       const response = await fetch('/api/volunteer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -48,7 +52,7 @@ const Volunteer = (props) => {
     }
   };
   useEffect(() => {
-    props.locations.map(prop => {
+    locations.map(prop => {
       const optionData = {
         id: prop.id,
         title: prop.title,
@@ -60,7 +64,6 @@ const Volunteer = (props) => {
     })
   }, []);
 
-
   const onSelect = (e) => {
     setSelected(e)
   }
@@ -69,7 +72,7 @@ const Volunteer = (props) => {
     setSelected(e)
   }
 
-  console.log(session)
+
   if (!session) {
     return(
       <div>
@@ -77,7 +80,13 @@ const Volunteer = (props) => {
       </div>
     )
   }
-
+  if (loggedIn) {
+    return(
+      <div>
+        <h3>You have successfully logged in</h3>
+      </div>
+    )
+  }
   return(
     <div>
       <form onSubmit={submitData}>

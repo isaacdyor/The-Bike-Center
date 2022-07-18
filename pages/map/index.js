@@ -15,6 +15,9 @@ export const getServerSideProps = async () => {
     where: {
       approved: true,
     },
+    include: {
+      donations: true,
+    },
   });
   return { props: { locations, volunteers } };
 }
@@ -36,6 +39,8 @@ const App = ({ locations, volunteers }) => {
   const [mapRef, setMapRef] = useState(null);
   const [selected, setSelected] = useState(null);
   const [volSelected, setVolSelected] = useState(null);
+  const [bikes, setBikes] = useState(0)
+  const [hours, setHours] = useState(0)
   const mapRef2 = useRef();
 
   const options = {
@@ -60,12 +65,14 @@ const App = ({ locations, volunteers }) => {
     const latLng = await getLatLng(results[0]);
     const volunteerData = {
       name: value.name,
+      userId: value.userId,
       address: value.address,
       radius: value.radius,
       phone: value.phone,
       notes: value.notes,
       lat: latLng.lat,
-      lng: latLng.lng
+      lng: latLng.lng,
+      donations: value.donations,
     }
     setVolCoords(volCoords => [...volCoords, volunteerData])
   };
@@ -80,7 +87,7 @@ const App = ({ locations, volunteers }) => {
       website: value.website,
       phone: value.phone,
       lat: latLng.lat,
-      lng: latLng.lng
+      lng: latLng.lng,
     }
     setCoords(coords => [...coords, locationData])
   };
@@ -105,7 +112,6 @@ const App = ({ locations, volunteers }) => {
       convertVolunteer(volunteer)
     })}
   }
-
   const panTo = React.useCallback(({lat, lng}) => {
     mapRef2.current.panTo({lat, lng});
     mapRef2.current.setZoom(11.5);
@@ -159,6 +165,14 @@ const App = ({ locations, volunteers }) => {
                     onCenterChanged()
                     setVolSelected(volCoord);
                     setSelected(null)
+                    setBikes(0)
+                    setHours((0))
+                    volCoord.donations.forEach(donation => {
+                      setBikes(bikes+parseInt(donation.bikes))
+                    })
+                    volCoord.donations.forEach(donation => {
+                      setHours(hours+parseInt(donation.hours))
+                    })
                   }}
                   icon={{
                     url: '/user-solid.svg',
@@ -174,6 +188,7 @@ const App = ({ locations, volunteers }) => {
                 position={{ lat: selected.lat, lng: selected.lng }}
                 onCloseClick={() => {
                   setSelected(null);
+                  onCenterChanged()
                 }}
               >
                 <div>
@@ -183,6 +198,7 @@ const App = ({ locations, volunteers }) => {
                   <p>{selected.address}</p>
                   <p>{selected.phone}</p>
                   <a href={selected.website}>More Info</a>
+
                 </div>
               </InfoWindow>
             ) : null
@@ -193,15 +209,18 @@ const App = ({ locations, volunteers }) => {
                   position={{ lat: volSelected.lat, lng: volSelected.lng }}
                   onCloseClick={() => {
                     setVolSelected(null);
+                    onCenterChanged()
                   }}
                 >
                   <div>
                     <h2>
-                      {volSelected.name}
+                      <Link href={`/profile/${volSelected.userId}`}><a>{volSelected.name}</a></Link>
                     </h2>
                     <p>{volSelected.address}</p>
                     <p>{volSelected.phone}</p>
                     <p>{volSelected.notes}</p>
+                    <p>{bikes} bikes donated</p>
+                    <p>{hours} hours volunteered</p>
                   </div>
                 </InfoWindow>
                 <Circle

@@ -209,7 +209,7 @@ const App = ({ location }) => {
                 >
                   <div>
                     <h2>
-                      {volSelected.name}
+                      <Link href={`/profile/${selected.userId}`}><a>{volSelected.name}</a></Link>
                     </h2>
                     <p>{volSelected.address}</p>
                     <p>{volSelected.phone}</p>

@@ -61,6 +61,7 @@ model Location {
   phone     String?
 
   volunteers Volunteer[]
+  donations Donation[]
 }
 
 model Volunteer {
@@ -76,5 +77,21 @@ model Volunteer {
   userId   String  @unique
 
   locations Location[]
+  donations Donation[]
+}
+
+model Donation {
+  id        String     @default(cuid()) @id
+  bikes     String
+  hours     String
+  description   String?
+  value     String?
+
+  approved Boolean @default(false)
+
+  volunteer   Volunteer @relation(fields: [volunteerId], references: [id])
+  volunteerId String
+  location   Location @relation(fields: [locationId], references: [id])
+  locationId String
 }
 

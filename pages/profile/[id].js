@@ -23,9 +23,8 @@ export const getServerSideProps = async ({params}) => {
 }
 
 const Profile = (props) => {
-  const { data: session, status } = useSession();
 
-  console.log(props);
+  const { data: session, status } = useSession();
 
   const deleteData = async (e) => {
     // e.preventDefault();
@@ -56,25 +55,47 @@ const Profile = (props) => {
     )
   }
 
-  return (
-    <div>
-      <h2>{props?.name}</h2>
-      <p>{props?.address}</p>
-      <p>{props?.radius}</p>
-      <p>{props?.phone}</p>
-      <p>{props?.notes}</p>
-      <h5>Locations</h5>
-      {props?.locations.map(location => {
-        return(
-          <div key={location.id}>
-            <p>{location.title}</p>
-          </div>
-        )
-      })}
-      <button onClick={() => Router.push(`/profile/edit/${props.userId}`)}>Edit</button>
-      <button onClick={handleDelete}>Delete</button>
-    </div>
-  );
+  {if (session.user.id === props?.userId) {
+    return(
+      <div>
+        <h2>{props?.name}</h2>
+        <p>{props?.address}</p>
+        <p>{props?.radius}</p>
+        <p>{props?.phone}</p>
+        <p>{props?.notes}</p>
+        <h5>Locations</h5>
+        {props?.locations.map(location => {
+          return(
+            <div key={location.id}>
+              <p>{location.title}</p>
+            </div>
+          )
+        })}
+        <button onClick={() => Router.push(`/profile/edit/${props.userId}`)}>Edit</button>
+        <button onClick={handleDelete}>Delete</button>
+      </div>
+    )
+  }else {
+    return(
+      <div>
+        <h2>{props?.name}</h2>
+        <p>{props?.address}</p>
+        <p>{props?.radius}</p>
+        <p>{props?.phone}</p>
+        <p>{props?.notes}</p>
+        <h5>Locations</h5>
+        {props?.locations.map(location => {
+          return(
+            <div key={location.id}>
+              <p>{location.title}</p>
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
+  }
+
 };
 
 export default Profile;

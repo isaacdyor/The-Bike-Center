@@ -168,10 +168,14 @@ const App = ({ locations, volunteers }) => {
                     setBikes(0)
                     setHours((0))
                     volCoord.donations.forEach(donation => {
-                      setBikes(bikes+parseInt(donation.bikes))
+                      if (donation.approved) {
+                        setBikes(bikes+parseInt(donation.bikes))
+                      }
                     })
                     volCoord.donations.forEach(donation => {
-                      setHours(hours+parseInt(donation.hours))
+                      if (donation.approved) {
+                        setHours(hours+parseInt(donation.hours))
+                      }
                     })
                   }}
                   icon={{

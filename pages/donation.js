@@ -96,11 +96,12 @@ const Volunteer = (props) => {
           type="number"
           value={hours}
         />
+        <br/>
         <input
           autoFocus
           onChange={(e) => setValue(e.target.value)}
           placeholder="Approximate value of goods donated in dollars"
-          type="text"
+          type="number"
           value={value}
         />
         <textarea

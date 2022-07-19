@@ -1,6 +1,6 @@
 import Header from "./Navbar"
 
-const Layout = ({ children }) => {
+const Layout = ({ children, volunteers }) => {
   return (
     <div className="content">
       <Header />

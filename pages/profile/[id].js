@@ -39,7 +39,7 @@ const Profile = (props) => {
   };
 
   const handleDelete = () => {
-    const result = confirm("Are you sure you want to delete your volunteer profile?");
+    const result = confirm("Are you sure you want to delete your volunteer donations?");
     if (result) {
       deleteData()
     }
@@ -71,6 +71,7 @@ const Profile = (props) => {
             </div>
           )
         })}
+        <button onClick={() => Router.push(`/profile/donations/${props.id}`)}>See donations</button>
         <button onClick={() => Router.push(`/profile/edit/${props.userId}`)}>Edit</button>
         <button onClick={handleDelete}>Delete</button>
       </div>
@@ -91,6 +92,7 @@ const Profile = (props) => {
             </div>
           )
         })}
+        <button onClick={() => Router.push(`/profile/donations/${props.id}`)}>See donations</button>
       </div>
     )
   }

@@ -90,8 +90,8 @@ model Donation {
   approved Boolean @default(false)
 
   volunteer   Volunteer @relation(fields: [volunteerId], references: [id])
-  volunteerId String
+  volunteerId String @unique
   location   Location @relation(fields: [locationId], references: [id])
-  locationId String
+  locationId String @unique
 }
 

@@ -5,6 +5,7 @@ import prisma from "../../lib/prisma";
 import Link from 'next/link'
 
 import { FaLocationArrow } from 'react-icons/fa';
+import Router from "next/router";
 const libraries = ["places"];
 
 export const getServerSideProps = async () => {
@@ -225,6 +226,7 @@ const App = ({ locations, volunteers }) => {
                     <p>{volSelected.notes}</p>
                     <p>{bikes} bikes donated</p>
                     <p>{hours} hours volunteered</p>
+                    <button onClick={() => Router.push(`/transport/${volSelected.userId}`)}>Request a pickup</button>
                   </div>
                 </InfoWindow>
                 <Circle

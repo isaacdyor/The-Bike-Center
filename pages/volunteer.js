@@ -10,7 +10,7 @@ import {useLoadScript} from "@react-google-maps/api";
 const libraries = ['places']
 
 export const getServerSideProps = async (context) => {
-  const volunteers = await prisma.location.findMany();
+  const volunteers = await prisma.volunteer.findMany();
   const locations = await prisma.location.findMany();
 
   return { props: { locations, volunteers } }
@@ -18,11 +18,6 @@ export const getServerSideProps = async (context) => {
 }
 
 const Volunteer = ({locations, volunteers}) => {
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY,
-    libraries
-  })
-
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [radius, setRadius] = useState('');
@@ -30,7 +25,6 @@ const Volunteer = ({locations, volunteers}) => {
   const [notes, setNotes] = useState('');
   const [options, setOptions] = useState([])
   const [selected, setSelected] = useState([])
-  const [isVolunteer, setIsVolunteer] = useState(false)
   const { data: session, status } = useSession();
 
   const submitData = async (e) => {
@@ -59,31 +53,9 @@ const Volunteer = ({locations, volunteers}) => {
       }
       setOptions(options => [...options, optionData])
     })
-    onLoad()
+
   }, []);
 
-  const waitUntil = (condition) => {
-    return new Promise((resolve) => {
-      let interval = setInterval(() => {
-        if (!condition()) {
-          return
-        }
-
-        clearInterval(interval)
-        resolve()
-      }, 100)
-    })
-  }
-  const onLoad = async () => {
-    await waitUntil(() => (status !== 'loading'))
-    console.log(volunteers)
-    console.log(session)
-    // volunteers.forEach(volunteer => {
-    //   if (volunteer.userId === session.user.id) {
-    //     setIsVolunteer(true)
-    //   }
-    // })
-  }
 
   const onSelect = (e) => {
     setSelected(e)
@@ -92,6 +64,11 @@ const Volunteer = ({locations, volunteers}) => {
   const onRemove = (e) => {
     setSelected(e)
   }
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY,
+    libraries
+  })
 
   if (!session) {
     return(

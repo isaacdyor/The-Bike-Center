@@ -4,27 +4,37 @@ import PlacesAutocomplete from 'react-places-autocomplete'
 import Link from 'next/link';
 import {useSession} from "next-auth/react";
 import Multiselect from 'multiselect-react-dropdown';
-import prisma from "../lib/prisma";
+import prisma from "../../lib/prisma";
 import {useLoadScript} from "@react-google-maps/api";
 
 const libraries = ['places']
 
-export const getServerSideProps = async (context) => {
+export const getServerSideProps = async ({params}) => {
+  const volunteer = await prisma.volunteer.findUnique({
+    where: {
+      userId: String(params?.id),
+    },
+  });
   const locations = await prisma.location.findMany();
-
-  const volunteers = await prisma.volunteer.findMany()
-
-  return { props: { locations, volunteers } }
-
+  const assignments = await prisma.assignment.findMany({
+    where: {
+      userId: String(params?.id),
+      completed: false,
+    },
+    include: {
+      location: true,
+    },
+  })
+  if (volunteer === null) {
+    return { props: {locations, assignments} }
+  } else {
+    return {
+      props: { locations, volunteer, assignments }
+    };
+  }
 }
 
-const Volunteer = ({locations, volunteers}) => {
-
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY,
-    libraries
-  })
-
+const Volunteer = ({locations, volunteer, assignments}) => {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [radius, setRadius] = useState('');
@@ -32,9 +42,9 @@ const Volunteer = ({locations, volunteers}) => {
   const [notes, setNotes] = useState('');
   const [options, setOptions] = useState([])
   const [selected, setSelected] = useState([])
-  const [loggedIn, setLoggedIn] = useState(false)
-  const { data: session } = useSession();
-  console.log(session)
+  const [isVolunteer, setIsVolunteer] = useState(false)
+  const [completed, setCompleted] = useState(true)
+  const { data: session, status } = useSession();
 
   const submitData = async (e) => {
     e.preventDefault();
@@ -62,7 +72,9 @@ const Volunteer = ({locations, volunteers}) => {
       }
       setOptions(options => [...options, optionData])
     })
+
   }, []);
+
 
   const onSelect = (e) => {
     setSelected(e)
@@ -71,7 +83,19 @@ const Volunteer = ({locations, volunteers}) => {
   const onRemove = (e) => {
     setSelected(e)
   }
+  async function markComplete(id) {
+    await fetch(`/api/assignment/${id}`, {
+      method: 'PUT',
+    });
+    await Router.push(`/volunteer/${volunteer.userId}`);
+  }
 
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY,
+    libraries
+  })
+
+  if (!isLoaded) return "Loading...";
 
   if (!session) {
     return(
@@ -80,13 +104,36 @@ const Volunteer = ({locations, volunteers}) => {
       </div>
     )
   }
-  if (loggedIn) {
+
+  if (volunteer !== undefined && session.user.id === volunteer?.userId) {
     return(
       <div>
-        <h3>You have successfully logged in</h3>
+        <h2>Assignments</h2>
+        <hr/>
+        {assignments[0]?.name === undefined ? (
+          <p>You currently have no assignments</p>
+        ) : (
+          <></>
+        )}
+        {assignments.map(assignment => {
+          return(
+            <div key={assignment.id}>
+              <p>{assignment.name}</p>
+              <p>{assignment.address}</p>
+              <p>{assignment.email}</p>
+              <p>{assignment.phone}</p>
+              <p>{assignment.bikes}</p>
+              <p>{assignment.notes}</p>
+              <p>{assignment.location.title}</p>
+              <button onClick={() => markComplete(assignment.id)}>Mark Complete</button>
+              <hr/>
+            </div>
+          )
+        })}
       </div>
     )
   }
+
   return(
     <div>
       <form onSubmit={submitData}>
@@ -153,7 +200,7 @@ const Volunteer = ({locations, volunteers}) => {
           placeholder="Please select the locations you will be donating to"
         />
 
-        <input disabled={!name || !address || !radius} type="submit" value="Create" />
+        <input disabled={!name || !address || !radius || !selected} type="submit" value="Create" />
         <a className="back" href="#" onClick={() => Router.push('/')}>
           or Cancel
         </a>

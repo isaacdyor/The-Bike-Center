@@ -43,6 +43,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   volunteer     Volunteer?
+  assignments Assignment[]
 }
 
 model VerificationToken {
@@ -62,6 +63,7 @@ model Location {
 
   volunteers Volunteer[]
   donations Donation[]
+  assignments Assignment[]
 }
 
 model Volunteer {
@@ -73,11 +75,12 @@ model Volunteer {
   notes     String?
   approved Boolean @default(false)
 
-  user     User @relation(fields: [userId], references: [id])
+  user     User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId   String  @unique
 
   locations Location[]
   donations Donation[]
+  assignments Assignment[]
 }
 
 model Donation {
@@ -89,9 +92,28 @@ model Donation {
 
   approved Boolean @default(false)
 
-  volunteer   Volunteer @relation(fields: [volunteerId], references: [id])
-  volunteerId String @unique
+  volunteer   Volunteer @relation(fields: [volunteerId], references: [id], onDelete: Cascade)
+  volunteerId String
   location   Location @relation(fields: [locationId], references: [id])
-  locationId String @unique
+  locationId String
+}
+
+model Assignment {
+  id        String     @default(cuid()) @id
+  name      String
+  email     String
+  address   String
+  phone     String?
+  bikes     String?
+  notes     String?
+
+  completed Boolean @default(false)
+
+  volunteer   Volunteer @relation(fields: [volunteerId], references: [id], onDelete: Cascade)
+  volunteerId String
+  location   Location @relation(fields: [locationId], references: [id])
+  locationId String
+  user     User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String
 }
 

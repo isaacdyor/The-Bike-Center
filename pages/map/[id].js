@@ -5,6 +5,7 @@ import {Circle, GoogleMap, InfoWindow, Marker, useLoadScript} from "@react-googl
 import PlacesAutocomplete, {geocodeByAddress, getLatLng} from "react-places-autocomplete";
 import Link from "next/link";
 import {FaLocationArrow} from "react-icons/fa";
+import Router from "next/router";
 
 const libraries = ["places"];
 
@@ -253,6 +254,7 @@ const App = ({ location, volunteers }) => {
                     <p>{volSelected.notes}</p>
                     <p>{bikes} bikes donated</p>
                     <p>{hours} hours volunteered</p>
+                    <button onClick={() => Router.push(`/transport/${volSelected.userId}`)}>Request a pickup</button>
                   </div>
                 </InfoWindow>
                 <Circle

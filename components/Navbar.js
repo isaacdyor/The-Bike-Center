@@ -34,7 +34,7 @@ export const Header = (props) => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/volunteer">Volunteer</Nav.Link>
+            <Nav.Link href={`/volunteer/${session?.user?.id}`}>Volunteer</Nav.Link>
             <Nav.Link href="/map">Map</Nav.Link>
             <Nav.Link href={`/profile/${session?.user?.id}`}>Profile</Nav.Link>
             <Nav.Link href="/api/auth/signout">Logout</Nav.Link>

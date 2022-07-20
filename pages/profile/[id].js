@@ -51,7 +51,7 @@ const Profile = (props) => {
 
   if (props?.name === undefined) {
     return(
-      <p>You dont currently have a volunteer profile. Click <Link href="/volunteer"><a>here</a></Link> to create one.</p>
+      <p>You dont currently have a volunteer profile. Click <Link href={`/volunteer/${session.user.id}`}><a>here</a></Link> to create one.</p>
     )
   }
 
@@ -93,6 +93,7 @@ const Profile = (props) => {
           )
         })}
         <button onClick={() => Router.push(`/profile/donations/${props.id}`)}>See donations</button>
+        <button onClick={() => Router.push(`/transport/${props.userId}`)}>Request a pickup</button>
       </div>
     )
   }

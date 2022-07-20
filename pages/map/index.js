@@ -221,8 +221,6 @@ const App = ({ locations, volunteers }) => {
                     <h2>
                       <Link href={`/profile/${volSelected.userId}`}><a>{volSelected.name}</a></Link>
                     </h2>
-                    <p>{volSelected.address}</p>
-                    <p>{volSelected.phone}</p>
                     <p>{volSelected.notes}</p>
                     <p>{bikes} bikes donated</p>
                     <p>{hours} hours volunteered</p>

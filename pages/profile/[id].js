@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Router from 'next/router';
 import { useSession } from 'next-auth/react';
 import prisma from '../../lib/prisma';
@@ -11,6 +11,7 @@ export const getServerSideProps = async ({params}) => {
     },
     include: {
       locations: true,
+      donations: true,
     },
   })
   if (volunteer === null) {
@@ -23,8 +24,23 @@ export const getServerSideProps = async ({params}) => {
 }
 
 const Profile = (props) => {
-
+  const [bikes, setBikes] = useState(0)
+  const [hours, setHours] = useState(0)
   const { data: session, status } = useSession();
+
+  useEffect(() => {
+    props.volunteer.donations.forEach(donation => {
+      if (donation.approved) {
+        setBikes(bikes+parseInt(donation.bikes))
+      }
+    })
+    props.volunteer.donations.forEach(donation => {
+      if (donation.approved) {
+        setHours(hours+parseInt(donation.hours))
+      }
+    })
+  }, []);
+
 
   const deleteData = async (e) => {
     // e.preventDefault();
@@ -58,11 +74,13 @@ const Profile = (props) => {
   {if (session.user.id === props?.userId) {
     return(
       <div>
-        <h2>{props?.name}</h2>
-        <p>{props?.address}</p>
-        <p>{props?.radius}</p>
-        <p>{props?.phone}</p>
-        <p>{props?.notes}</p>
+        <h2>Name: {props?.name}</h2>
+        <p>Address: {props?.address}</p>
+        <p>Radius: {props?.radius}</p>
+        <p>Phone: {props?.phone}</p>
+        <p>Notes: {props?.notes}</p>
+        <p>{bikes} bikes donated</p>
+        <p>{hours} hours volunteered</p>
         <h5>Locations</h5>
         {props?.locations.map(location => {
           return(
@@ -79,11 +97,10 @@ const Profile = (props) => {
   }else {
     return(
       <div>
-        <h2>{props?.name}</h2>
-        <p>{props?.address}</p>
-        <p>{props?.radius}</p>
-        <p>{props?.phone}</p>
-        <p>{props?.notes}</p>
+        <h2>Name: {props?.name}</h2>
+        <p>Bikes donated: {bikes}</p>
+        <p>Hours volunteered: {hours}</p>
+        <p>Notes: {props?.notes}</p>
         <h5>Locations</h5>
         {props?.locations.map(location => {
           return(

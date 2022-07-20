@@ -73,7 +73,7 @@ const Edit = (props) => {
     e.preventDefault();
     try {
       const body = { name, address, radius, phone, notes, id, selected };
-      const response = await fetch(`/api/edit/${id}`, {
+      const response = await fetch(`/api/volunteer/edit/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
@@ -158,7 +158,7 @@ const Edit = (props) => {
             placeholder="Please select the locations you will be donating to"
             selectedValues={preselected}
           />
-          <input disabled={!name || !address} type="submit" value="Edit" />
+          <input disabled={!name || !address || !selected} type="submit" value="Edit" />
           <a className="back" href="#" onClick={() => Router.push(`/profile/${props.volunteer.userId}`)}>
             or Cancel
           </a>

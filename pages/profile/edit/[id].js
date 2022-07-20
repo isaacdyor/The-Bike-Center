@@ -90,6 +90,8 @@ const Edit = (props) => {
     libraries
   })
 
+  if (!isLoaded) return "Loading...";
+
   {if (sessionId === props?.volunteer?.userId) {
     return(
       <div>

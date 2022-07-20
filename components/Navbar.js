@@ -36,6 +36,7 @@ export const Header = (props) => {
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href={`/volunteer/${session?.user?.id}`}>Volunteer</Nav.Link>
             <Nav.Link href="/map">Map</Nav.Link>
+            <Nav.Link href="/donation">Donation Form</Nav.Link>
             <Nav.Link href={`/profile/${session?.user?.id}`}>Profile</Nav.Link>
             <Nav.Link href="/api/auth/signout">Logout</Nav.Link>
           </Nav>

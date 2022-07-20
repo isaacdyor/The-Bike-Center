@@ -56,7 +56,7 @@ const Volunteer = ({locations, volunteer, assignments}) => {
         body: JSON.stringify(body),
       });
       const data = await response.json()
-      await Router.push('/map');
+      await Router.push('/volunteer/new-volunteer');
     } catch (error) {
       console.error(error);
     }

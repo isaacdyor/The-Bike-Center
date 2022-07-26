@@ -95,6 +95,62 @@ const Volunteer = ({locations, volunteer, assignments}) => {
     libraries
   })
 
+  //styling
+  const voluneteer_background = {
+    textAlign: "center",
+    position:"relative",
+    marginRight:"10%",
+    marginLeft:"10%",
+    marginTop: "2%",
+    marginBottom:"2%",
+    backgroundImage: "url('https://c4.wallpaperflare.com/wallpaper/963/87/601/light-blue-background-hd-wallpaper-wallpaper-preview.jpg')",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "100% 100%",
+  }
+  const volunteer_h1 = {
+    fontSize : "3vw",
+    textAlign : "center",
+    paddingTop:"2%",
+    
+  }
+ 
+  const volunteer_entry = {
+    width: "90%",
+    marginBottom: "5%",
+    marginLeft: "0%",
+    paddingBottom: "15px",
+  }
+  const volunteer_submit = {
+    backgroundImage : "url(https://www.xmple.com/wallpaper/sunburst-burst-green-rays-white-1920x1080-c2-32cd32-ffffff-k2-50-50-l2-30-0-a-6-f-22.svg)",
+    backgroundSize : "100% 100%",
+    backgroundRepeat: "no-repeat",
+    color : "Black",
+    fontSize : "1.5vw",
+    border : "none",
+    borderRadius : "30px",
+    marginBottom: "1%",
+    marginTop: "1%",
+    marginRight : "3%",
+    fontWeight : "bolder",
+    width: "10vw",
+    }
+
+    const volunteer_cancel = {
+      backgroundSize : "100% 100%",
+      backgroundRepeat: "no-repeat",
+      color : "#ff7373",
+      fontSize : "1.5vw",
+      border : "none",
+      borderRadius : "30px",
+      marginBottom: "1%",
+      marginTop: "1%",
+      marginRight : "10%",
+      fontWeight : "bolder",
+      textDecoration : "underline",
+      width: "10vw",
+      }
+ 
+      
   if (!isLoaded) return "Loading...";
 
   if (!session) {
@@ -108,7 +164,7 @@ const Volunteer = ({locations, volunteer, assignments}) => {
   if (volunteer !== undefined && session.user.id === volunteer?.userId) {
     return(
       <div>
-        <h2>Assignments</h2>
+        <h1 style = {volunteer_h1}>Assignments</h1>
         <hr/>
         {assignments[0]?.name === undefined ? (
           <p>You currently have no assignments</p>
@@ -135,15 +191,16 @@ const Volunteer = ({locations, volunteer, assignments}) => {
   }
 
   return(
-    <div>
+    <div style = {voluneteer_background}>
       <form onSubmit={submitData}>
-        <h1>Become a Volunteer</h1>
+        <h1 style={volunteer_h1}>Become a Volunteer</h1>
         <input
           autoFocus
           onChange={(e) => setName(e.target.value)}
           placeholder="Name"
           type="text"
           value={name}
+          style =  {volunteer_entry}
         />
         <PlacesAutocomplete
           value={address}
@@ -151,7 +208,7 @@ const Volunteer = ({locations, volunteer, assignments}) => {
         >
           {({ getInputProps, suggestions, getSuggestionItemProps }) => (
             <div>
-              <input {...getInputProps({ placeholder: "Type address" })} />
+              <input style =  {volunteer_entry} {...getInputProps({ placeholder: "Type address" })} />
 
               <div>
                 {suggestions.map(suggestion => {
@@ -173,9 +230,10 @@ const Volunteer = ({locations, volunteer, assignments}) => {
         <input
           autoFocus
           onChange={(e) => setRadius(e.target.value)}
-          placeholder="Radius"
+          placeholder="Radius (Miles)"
           type="number"
           value={radius}
+          style =  {volunteer_entry}
         />
         <input
           autoFocus
@@ -183,6 +241,7 @@ const Volunteer = ({locations, volunteer, assignments}) => {
           placeholder="Phone Number"
           type="text"
           value={phone}
+          style =  {volunteer_entry}
         />
         <textarea
           cols={50}
@@ -190,6 +249,7 @@ const Volunteer = ({locations, volunteer, assignments}) => {
           placeholder="Notes"
           rows={8}
           value={notes}
+          style =  {volunteer_entry}
         />
         <Multiselect
           displayValue="title"
@@ -200,9 +260,9 @@ const Volunteer = ({locations, volunteer, assignments}) => {
           placeholder="Please select the locations you will be donating to"
         />
 
-        <input disabled={!name || !address || !radius || !selected} type="submit" value="Create" />
-        <a className="back" href="#" onClick={() => Router.push('/')}>
-          or Cancel
+        <input disabled={!name || !address || !radius || !selected} type="submit" value="Create" style = {volunteer_submit}/>
+        <a style = {volunteer_cancel} className="back" href="#" onClick={() => Router.push('/')}>
+          Or Cancel
         </a>
       </form>
     </div>

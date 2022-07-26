@@ -11,6 +11,8 @@ const nextConfig = {
       'bicyclensw.org.au',
       'images.pexels.com',
       'i.pinimg.com',
+      'encrypted-tbn0.gstatic.com',
+      'webris.org',
     ],
   },
 }

@@ -8,7 +8,7 @@ const Volunteer = () => {
   
   const newvol_h1 = {
     textAlign: "center",
-    fontSize: "150px",
+    fontSize: "50px",
     width: "60vw",
     marginLeft : "13vw",
   }
@@ -51,10 +51,7 @@ const Volunteer = () => {
   return(
     <div style = {newvol_background}>
       <div>
-        <Image style = {img_one} src = "https://webris.org/wp-content/uploads/2019/01/giphy.gif"/>
-        <Image style = {img_two} src = "https://webris.org/wp-content/uploads/2019/01/giphy.gif"/>
         <h1 style = {newvol_h1}>Successfully Signed Up As A Volunteer!!!</h1>
-        
       </div>
       
       <h4 style = {h4_styling}>When someone requests you to pick up a bike for them an email will be sent to the email address you logged in with.

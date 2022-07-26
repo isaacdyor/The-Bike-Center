@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import React from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
+import Image from "next/image";
 
 
 export const Header = (props) => {
@@ -35,7 +36,7 @@ export const Header = (props) => {
       <div className="map-navbar">
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
           <Navbar.Brand href="/" style={brand_style}>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQAiSbUgqCbN_h3H7g5tjIZK4ljpN7cOAOFg&usqp=CAU" style={brand_style}/>The Bike Center
+            <Image width={1000} height={1000} alt="" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQAiSbUgqCbN_h3H7g5tjIZK4ljpN7cOAOFg&usqp=CAU" style={brand_style}/>The Bike Center
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
@@ -53,7 +54,7 @@ export const Header = (props) => {
   return(
     <div className="map-navbar">
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Navbar.Brand href="/" style={brand_style}><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQAiSbUgqCbN_h3H7g5tjIZK4ljpN7cOAOFg&usqp=CAU" style={brand_style}/>The Bike Center</Navbar.Brand>
+        <Navbar.Brand href="/" style={brand_style}><Image width={1000} height={1000} alt="" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQAiSbUgqCbN_h3H7g5tjIZK4ljpN7cOAOFg&usqp=CAU" style={brand_style}/>The Bike Center</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto" style={link_style}>

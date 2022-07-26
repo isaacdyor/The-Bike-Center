@@ -5,7 +5,14 @@ const nextConfig = {
   webpack: (config) => {
     config.resolve.fallback = {fs: false};
     return config;
-  }
+  },
+  images: {
+    domains: [
+      'bicyclensw.org.au',
+      'images.pexels.com',
+      'i.pinimg.com',
+    ],
+  },
 }
 
 module.exports = nextConfig

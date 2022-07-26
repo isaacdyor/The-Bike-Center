@@ -29,12 +29,12 @@ const Profile = (props) => {
   const { data: session, status } = useSession();
 
   useEffect(() => {
-    props.volunteer.donations.forEach(donation => {
+    props?.volunteer?.donations.forEach(donation => {
       if (donation.approved) {
         setBikes(bikes+parseInt(donation.bikes))
       }
     })
-    props.volunteer.donations.forEach(donation => {
+    props?.volunteer?.donations.forEach(donation => {
       if (donation.approved) {
         setHours(hours+parseInt(donation.hours))
       }
@@ -81,6 +81,11 @@ const Profile = (props) => {
         <p>Notes: {props?.notes}</p>
         <p>{bikes} bikes donated</p>
         <p>{hours} hours volunteered</p>
+        {props?.approved ? (
+          <p>Approved</p>
+        ) : (
+          <p>Pending Approval</p>
+        )}
         <h5>Locations</h5>
         {props?.locations.map(location => {
           return(

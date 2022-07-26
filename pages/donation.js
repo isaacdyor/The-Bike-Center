@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Router from 'next/router';
-import PlacesAutocomplete from 'react-places-autocomplete'
 import Link from 'next/link';
 import {useSession} from "next-auth/react";
 import Multiselect from 'multiselect-react-dropdown';

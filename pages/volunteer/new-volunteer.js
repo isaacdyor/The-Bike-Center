@@ -1,6 +1,7 @@
 import React from "react";
 import Link from 'next/link'
 import {useSession} from "next-auth/react";
+import Image from 'next/image'
 
 const Volunteer = () => {
   const { data: session, status } = useSession();
@@ -50,8 +51,8 @@ const Volunteer = () => {
   return(
     <div style = {newvol_background}>
       <div>
-        <img style = {img_one} src = "https://webris.org/wp-content/uploads/2019/01/giphy.gif"/>
-        <img style = {img_two} src = "https://webris.org/wp-content/uploads/2019/01/giphy.gif"/>
+        <Image style = {img_one} src = "https://webris.org/wp-content/uploads/2019/01/giphy.gif"/>
+        <Image style = {img_two} src = "https://webris.org/wp-content/uploads/2019/01/giphy.gif"/>
         <h1 style = {newvol_h1}>Successfully Signed Up As A Volunteer!!!</h1>
         
       </div>

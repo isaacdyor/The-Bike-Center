@@ -7,6 +7,7 @@ import 'react-intersection-observer'
 import {useRef, useEffect, useState} from 'react';
 import {useInView} from 'react-intersection-observer';
 import { NonceProvider } from 'react-select';
+import Image from 'next/image'
 
 
 
@@ -130,9 +131,9 @@ export default function Header (props) {
   if (!session) {
     return(
     <div id="container">
-      <div class="homestyle" style={home1_styling}>
+      <div className="homestyle" style={home1_styling}>
         <h1 style={h1_styling}>The Bike Center</h1>
-        <img src="https://bicyclensw.org.au/wp-content/uploads/2019/09/757-0919-Bicycle-NSW-Rolling-bike-Orange.gif" style={gif_styling}/>
+        <Image src="https://bicyclensw.org.au/wp-content/uploads/2019/09/757-0919-Bicycle-NSW-Rolling-bike-Orange.gif" width={1000} height={1000} style={gif_styling}/>
       </div>
       <div ref = {animation1} id ="homestyle" className = {isInView1? 'fadeIn' : 'noFade'} style={home2_styling}>
         <div style={home_text_left}>
@@ -140,7 +141,7 @@ export default function Header (props) {
             <h4 style={h4_styling}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar arcu at urna mattis tempor. Morbi quis ante at risus pellentesque finibus vel eget risus. Nullam at elementum erat, nec tempus velit. Nam ac lorem massa.</h4>
         </div>
         <div>
-          <img style={home_image_right} src="https://images.pexels.com/photos/100582/pexels-photo-100582.jpeg?h=1000&w=1500&fit=crop&markalign=center%2Cmiddle&txt=pexels.com&txtalign=center&txtsize=60&txtclr=eeffffff&txtfont=Avenir-Heavy&txtshad=10&mark=https%3A%2F%2Fassets.imgix.net%2F~text%3Ftxtclr%3Dfff%26txtsize%3D120%26txtpad%3D20%26bg%3D80000000%26txtfont%3DAvenir-Heavy%26txtalign%3Dcenter%26w%3D1300%26txt%3DFree%2520Stock%2520Photos"/>
+          <Image width={1000} height={1000} style={home_image_right} src="https://images.pexels.com/photos/100582/pexels-photo-100582.jpeg?h=1000&w=1500&fit=crop&markalign=center%2Cmiddle&txt=pexels.com&txtalign=center&txtsize=60&txtclr=eeffffff&txtfont=Avenir-Heavy&txtshad=10&mark=https%3A%2F%2Fassets.imgix.net%2F~text%3Ftxtclr%3Dfff%26txtsize%3D120%26txtpad%3D20%26bg%3D80000000%26txtfont%3DAvenir-Heavy%26txtalign%3Dcenter%26w%3D1300%26txt%3DFree%2520Stock%2520Photos"/>
         </div>
       </div>
       <div ref = {animation2} id ="homestyle" className = {isInView2? 'fadeIn' : 'noFade'} style={home3_styling}>
@@ -149,7 +150,7 @@ export default function Header (props) {
             <h4 style={h4_styling}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar arcu at urna mattis tempor. Morbi quis ante at risus pellentesque finibus vel eget risus. Nullam at elementum erat, nec tempus velit. Nam ac lorem massa.</h4>
         </div>
         <div>
-          <img style={home_image_left} src="https://images.pexels.com/photos/71104/utah-mountain-biking-bike-biking-71104.jpeg"/>
+          <Image width={1000} height={1000} style={home_image_left} src="https://images.pexels.com/photos/71104/utah-mountain-biking-bike-biking-71104.jpeg"/>
         </div>    
       </div>
       <div ref = {animation3} id ="homestyle" className = {isInView3? 'fadeIn' : 'noFade'} style={home4_styling}>
@@ -158,7 +159,7 @@ export default function Header (props) {
             <h4 style={h4_styling}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar arcu at urna mattis tempor. Morbi quis ante at risus pellentesque finibus vel eget risus. Nullam at elementum erat, nec tempus velit. Nam ac lorem massa.</h4>
         </div>
         <div>
-          <img style={home_image_right} src="https://images.pexels.com/photos/2943358/pexels-photo-2943358.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"/>
+          <Image width={1000} height={1000} style={home_image_right} src="https://images.pexels.com/photos/2943358/pexels-photo-2943358.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"/>
         </div>
       </div>
       <div ref = {animation4} id ="homestyle" className = {isInView4? 'fadeIn' : 'noFade'} style={home5_styling}>
@@ -167,12 +168,12 @@ export default function Header (props) {
             <h4 style={h4_styling}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar arcu at urna mattis tempor. Morbi quis ante at risus pellentesque finibus vel eget risus. Nullam at elementum erat, nec tempus velit. Nam ac lorem massa.</h4>
         </div>
         <div>
-          <img style={home_image_left} src="https://images.pexels.com/photos/1149601/pexels-photo-1149601.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"/>
+          <Image width={1000} height={1000} style={home_image_left} src="https://images.pexels.com/photos/1149601/pexels-photo-1149601.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"/>
         </div>
       </div>
       <div style={home_end_styling}>
         <h1 style={h1_end_styling}>Sign Up To Become A Part Of Our Mission!</h1>
-        <img style={arrow_gif} src="https://i.pinimg.com/originals/44/67/ce/4467ceda95866abb6e9060609fc81360.gif"/>
+        <Image width={1000} height={1000} style={arrow_gif} src="https://i.pinimg.com/originals/44/67/ce/4467ceda95866abb6e9060609fc81360.gif"/>
         <Link href="/api/auth/signin"><button style={button_style}>Become A Volunteer</button></Link>
       </div>
     </div>   
@@ -180,9 +181,9 @@ export default function Header (props) {
   }
   return(
     <div id="container">
-      <div class="homestyle" style={home1_styling}>
+      <div className="homestyle" style={home1_styling}>
         <h1 style={h1_styling}>The Bike Center</h1>
-        <img src="https://bicyclensw.org.au/wp-content/uploads/2019/09/757-0919-Bicycle-NSW-Rolling-bike-Orange.gif" style={gif_styling}/>
+        <Image width={1000} height={1000} src="https://bicyclensw.org.au/wp-content/uploads/2019/09/757-0919-Bicycle-NSW-Rolling-bike-Orange.gif" style={gif_styling}/>
       </div>
       <div ref = {animation1} id ="homestyle" className = {isInView1? 'fadeIn' : 'noFade'} style={home2_styling}>
         <div style={home_text_left}>
@@ -190,7 +191,7 @@ export default function Header (props) {
             <h4 style={h4_styling}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar arcu at urna mattis tempor. Morbi quis ante at risus pellentesque finibus vel eget risus. Nullam at elementum erat, nec tempus velit. Nam ac lorem massa.</h4>
         </div>
         <div>
-          <img style={home_image_right} src="https://images.pexels.com/photos/100582/pexels-photo-100582.jpeg?h=1000&w=1500&fit=crop&markalign=center%2Cmiddle&txt=pexels.com&txtalign=center&txtsize=60&txtclr=eeffffff&txtfont=Avenir-Heavy&txtshad=10&mark=https%3A%2F%2Fassets.imgix.net%2F~text%3Ftxtclr%3Dfff%26txtsize%3D120%26txtpad%3D20%26bg%3D80000000%26txtfont%3DAvenir-Heavy%26txtalign%3Dcenter%26w%3D1300%26txt%3DFree%2520Stock%2520Photos"/>
+          <Image width={1000} height={1000} style={home_image_right} src="https://images.pexels.com/photos/100582/pexels-photo-100582.jpeg?h=1000&w=1500&fit=crop&markalign=center%2Cmiddle&txt=pexels.com&txtalign=center&txtsize=60&txtclr=eeffffff&txtfont=Avenir-Heavy&txtshad=10&mark=https%3A%2F%2Fassets.imgix.net%2F~text%3Ftxtclr%3Dfff%26txtsize%3D120%26txtpad%3D20%26bg%3D80000000%26txtfont%3DAvenir-Heavy%26txtalign%3Dcenter%26w%3D1300%26txt%3DFree%2520Stock%2520Photos"/>
         </div>
       </div>
       <div ref = {animation2} id ="homestyle" className = {isInView2? 'fadeIn' : 'noFade'} style={home3_styling}>
@@ -199,7 +200,7 @@ export default function Header (props) {
             <h4 style={h4_styling}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar arcu at urna mattis tempor. Morbi quis ante at risus pellentesque finibus vel eget risus. Nullam at elementum erat, nec tempus velit. Nam ac lorem massa.</h4>
         </div>
         <div>
-          <img style={home_image_left} src="https://images.pexels.com/photos/71104/utah-mountain-biking-bike-biking-71104.jpeg"/>
+          <Image width={1000} height={1000} style={home_image_left} src="https://images.pexels.com/photos/71104/utah-mountain-biking-bike-biking-71104.jpeg"/>
         </div>    
       </div>
       <div ref = {animation3} id ="homestyle" className = {isInView3? 'fadeIn' : 'noFade'} style={home4_styling}>
@@ -208,7 +209,7 @@ export default function Header (props) {
             <h4 style={h4_styling}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar arcu at urna mattis tempor. Morbi quis ante at risus pellentesque finibus vel eget risus. Nullam at elementum erat, nec tempus velit. Nam ac lorem massa.</h4>
         </div>
         <div>
-          <img style={home_image_right} src="https://images.pexels.com/photos/2943358/pexels-photo-2943358.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"/>
+          <Image width={1000} height={1000} style={home_image_right} src="https://images.pexels.com/photos/2943358/pexels-photo-2943358.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"/>
         </div>
       </div>
       <div ref = {animation4} id ="homestyle" className = {isInView4? 'fadeIn' : 'noFade'} style={home5_styling}>
@@ -217,7 +218,7 @@ export default function Header (props) {
             <h4 style={h4_styling}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar arcu at urna mattis tempor. Morbi quis ante at risus pellentesque finibus vel eget risus. Nullam at elementum erat, nec tempus velit. Nam ac lorem massa.</h4>
         </div>
         <div>
-          <img style={home_image_left} src="https://images.pexels.com/photos/1149601/pexels-photo-1149601.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"/>
+          <Image width={1000} height={1000} style={home_image_left} src="https://images.pexels.com/photos/1149601/pexels-photo-1149601.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"/>
         </div>
       </div>
     </div>

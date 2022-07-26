@@ -133,7 +133,7 @@ export default function Header (props) {
     <div id="container">
       <div className="homestyle" style={home1_styling}>
         <h1 style={h1_styling}>The Bike Center</h1>
-        <Image src="https://bicyclensw.org.au/wp-content/uploads/2019/09/757-0919-Bicycle-NSW-Rolling-bike-Orange.gif" width={1000} height={1000} style={gif_styling}/>
+        <Image width={1000} height={1000} alt="" src="https://bicyclensw.org.au/wp-content/uploads/2019/09/757-0919-Bicycle-NSW-Rolling-bike-Orange.gif" style={gif_styling}/>
       </div>
       <div ref = {animation1} id ="homestyle" className = {isInView1? 'fadeIn' : 'noFade'} style={home2_styling}>
         <div style={home_text_left}>
@@ -201,7 +201,7 @@ export default function Header (props) {
         </div>
         <div>
           <Image width={1000} height={1000} alt="" style={home_image_left} src="https://images.pexels.com/photos/71104/utah-mountain-biking-bike-biking-71104.jpeg"/>
-        </div>    
+        </div>
       </div>
       <div ref = {animation3} id ="homestyle" className = {isInView3? 'fadeIn' : 'noFade'} style={home4_styling}>
         <div style={home_text_left}>
@@ -224,3 +224,4 @@ export default function Header (props) {
     </div>
   )
 };
+

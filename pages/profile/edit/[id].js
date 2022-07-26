@@ -59,7 +59,7 @@ const Edit = (props) => {
       }
       setPreselected(preselected => [...preselected, preselectedData])
     })
-  }, []);
+  });
 
   const onSelect = (e) => {
     setSelected(e)

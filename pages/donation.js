@@ -51,7 +51,7 @@ const Volunteer = (props) => {
       }
       setOptions(options => [...options, optionData])
     })
-  }, []);
+  });
 
 
   const onSelect = (e) => {

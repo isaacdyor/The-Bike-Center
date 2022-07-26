@@ -39,7 +39,7 @@ const Profile = (props) => {
         setHours(hours+parseInt(donation.hours))
       }
     })
-  }, []);
+  });
 
 
   const deleteData = async (e) => {

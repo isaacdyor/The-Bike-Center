@@ -62,7 +62,7 @@ const Transport = ({volunteer}) => {
       setPreSelected(preSelected => [...preSelected, preSelectedData])
       setSelected(selected => [...selected, preSelectedData])
     }
-  }, []);
+  });
 
   const onSelect = (e) => {
     setSelected(e)

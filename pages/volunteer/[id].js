@@ -73,7 +73,7 @@ const Volunteer = ({locations, volunteer, assignments}) => {
       setOptions(options => [...options, optionData])
     })
 
-  }, []);
+  });
 
 
   const onSelect = (e) => {

@@ -100,23 +100,6 @@ const Transport = ({volunteer}) => {
     } catch (error) {
       console.log(error)
     }
-
-    // sgMail
-    //   .send({
-    //     to: volunteer.user.email,
-    //     from: 'efcisaac07@gmail.com',
-    //     subject: 'New Pickup Request',
-    //     text: `${name} has requested you to pick up ${bikes} bike/s from ${address}.
-    //           To schedule a pickup time either email them at ${email} or call or text them at ${phone}.
-    //           They want this bike to be donated to ${selected[0]?.title}.
-    //           They left the following note: ${notes}. Thank you.`,
-    //   })
-    //   .then(() => {
-    //     console.log('Email sent')
-    //   })
-    //   .catch((error) => {
-    //     console.error(error)
-    //   })
   };
 
   const { isLoaded } = useLoadScript({
@@ -124,11 +107,70 @@ const Transport = ({volunteer}) => {
     libraries
   })
 
+  //styling
+  const transport_background = {
+    textAlign: "center",
+    position:"relative",
+    marginRight:"10%",
+    marginLeft:"10%",
+    marginTop: "2%",
+    marginBottom:"2%",
+    backgroundSize: "100% 100%",
+  }
+  const transport_h1 = {
+    fontSize : "3vw",
+    textAlign : "center",
+    paddingTop:"0%",
+    paddingBottom:"2%",
+
+  }
+
+  const transport_entry = {
+    width: "100%",
+    marginBottom: "1%",
+    marginLeft: "0%",
+    paddingBottom: "10px",
+    borderColor: "black",
+  }
+  const multiselect = {
+    searchBox: {
+      'border': '2px solid black',
+      'borderRadius': '0px',
+    }
+  }
+  const transport_submit = {
+    cursor: "pointer",
+    color : "Black",
+    fontSize : "1.5vw",
+    border : "none",
+    borderRadius : "30px",
+    marginBottom: "0%",
+    marginTop: "0%",
+    // marginRight : "3%",
+    fontWeight : "bolder",
+    width: "10vw",
+  }
+
+  const transport_cancel = {
+    backgroundSize : "100% 100%",
+    backgroundRepeat: "no-repeat",
+    color : "#0000EE",
+    fontSize : "1.5vw",
+    border : "none",
+    borderRadius : "30px",
+    marginBottom: "0%",
+    marginTop: "0%",
+    marginRight : "10%",
+    fontWeight : "bolder",
+    textDecoration : "underline",
+    width: "10vw",
+  }
+
   if (!isLoaded) return "Loading...";
 
   return(
-    <div>
-      <h3>Request a pickup from {volunteer.name}</h3>
+    <div style = {transport_background}>
+      <h1 style={transport_h1}>Request a pickup from {volunteer.name}</h1>
 
       <form onSubmit={submitData}>
         <input
@@ -137,14 +179,15 @@ const Transport = ({volunteer}) => {
           placeholder="Name"
           type="text"
           value={name}
+          style =  {transport_entry}
         />
         <br/>
         <input
-          autoFocus
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
           type="text"
           value={email}
+          style =  {transport_entry}
         />
         <br/>
 
@@ -154,7 +197,7 @@ const Transport = ({volunteer}) => {
         >
           {({ getInputProps, suggestions, getSuggestionItemProps }) => (
             <div>
-              <input {...getInputProps({ placeholder: "Address" })} />
+              <input style =  {transport_entry} {...getInputProps({ placeholder: "Address" })} />
 
               <div>
                 {suggestions.map(suggestion => {
@@ -174,25 +217,18 @@ const Transport = ({volunteer}) => {
           )}
         </PlacesAutocomplete>
         <input
-          autoFocus
           onChange={(e) => setPhone(e.target.value)}
           placeholder="Phone Number"
           type="text"
           value={phone}
+          style =  {transport_entry}
         />
         <input
-          autoFocus
           onChange={(e) => setBikes(e.target.value)}
           placeholder="Number of bikes being donated"
           type="number"
           value={bikes}
-        />
-        <textarea
-          cols={50}
-          onChange={(e) => setNotes(e.target.value)}
-          placeholder="Notes"
-          rows={8}
-          value={notes}
+          style =  {transport_entry}
         />
         <Multiselect
           displayValue="title"
@@ -203,14 +239,25 @@ const Transport = ({volunteer}) => {
           placeholder="Location you want to donate to"
           selectionLimit={1}
           selectedValues={preSelected}
+          style =  {multiselect}
         />
         <br/>
-        {selected[0]?.id === 'cl5k7bhco0055twvqvps0glq5' &&
-          <p>Fill out <Link href="https://bikeworks.org/donate/used-bicycle/#receipt" ><a> this form</a></Link>for a tax receipt</p>
-        }
+        <textarea
+          cols={50}
+          onChange={(e) => setNotes(e.target.value)}
+          placeholder="Notes"
+          rows={8}
+          value={notes}
+          style =  {transport_entry}
+        />
 
-        <input disabled={!name || !email || !address || !bikes} type="submit" value="Create" />
-        <a className="back" href="#" onClick={() => Router.push('/')}>
+        <br/>
+
+        <p>If you are donating to bike works you can fill out <Link href="https://bikeworks.org/donate/used-bicycle/#receipt"><a> this form</a></Link> for a tax receipt</p>
+
+
+        <input disabled={!name || !email || !address || !bikes} type="submit" value="Submit" style = {transport_submit}/>
+        <a className="back" href="#" onClick={() => Router.push('/')} style = {transport_cancel}>
           or Cancel
         </a>
       </form>

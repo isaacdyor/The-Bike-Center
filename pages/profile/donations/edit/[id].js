@@ -55,43 +55,95 @@ const Edit = ({ donation, locations }) => {
     libraries
   })
 
+  const donation_edit_background = {
+    textAlign: "center",
+    position:"relative",
+    marginRight:"10%",
+    marginLeft:"10%",
+    marginTop: "2%",
+    marginBottom:"2%",
+    backgroundSize: "90% 90%",
+  }
+  const donation_edit_entry = {
+    width: "100%",
+    marginBottom: "1%",
+    marginLeft: "0%",
+    paddingBottom: "10px",
+    borderColor: "black",
+  }
+  const donation_edit_submit = {
+    cursor: "pointer",
+    color : "Black",
+    fontSize : "1.5vw",
+    border : "none",
+    borderRadius : "30px",
+    marginBottom: "0%",
+    marginTop: "0%",
+    // marginRight : "3%",
+    fontWeight : "bolder",
+    width: "15vw",
+  }
+
+  const donation_edit_cancel = {
+    backgroundSize : "100% 100%",
+    backgroundRepeat: "no-repeat",
+    color : "#0000EE",
+    fontSize : "1.5vw",
+    border : "none",
+    borderRadius : "30px",
+    marginBottom: "0%",
+    marginTop: "0%",
+    marginRight : "10%",
+    fontWeight : "bolder",
+    textDecoration : "underline",
+    width: "10vw",
+  }
+
   {if (sessionId === donation?.volunteer?.userId) {
     return(
-      <div>
+      <div style={donation_edit_background}>
         <form onSubmit={submitData}>
-          <h1>Edit your donation</h1>
-
+          <h2>Edit your donation</h2>
+          <br/>
+          <p>Number of bikes donated:</p>
           <input
             autoFocus
             onChange={(e) => setBikes(e.target.value)}
             placeholder="Number of bikes donated"
             type="number"
             value={bikes}
+            style={donation_edit_entry}
           />
           <br/>
+          <p>Number of hours donated:</p>
           <input
             autoFocus
             onChange={(e) => setHours(e.target.value)}
             placeholder="Number of hours volunteered"
             type="number"
             value={hours}
+            style={donation_edit_entry}
           />
+          <p>Approximate value of goods donated (in dollars):</p>
           <input
             autoFocus
             onChange={(e) => setValue(e.target.value)}
             placeholder="Approximate value of goods donated in dollars"
             type="text"
             value={value}
+            style={donation_edit_entry}
           />
+          <p>Description of goods donated:</p>
           <textarea
             cols={50}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Description of goods donated"
             rows={8}
             value={description}
+            style={donation_edit_entry}
           />
-          <input disabled={!bikes || !hours } type="submit" value="Create" />
-          <a className="back" href="#" onClick={() => Router.push('/')}>
+          <input style={donation_edit_submit} disabled={!bikes || !hours } type="submit" value="Create" />
+          <a style={donation_edit_cancel} className="back" href="#" onClick={() => Router.push('/')}>
             or Cancel
           </a>
         </form>

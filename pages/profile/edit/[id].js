@@ -59,7 +59,7 @@ const Edit = (props) => {
       }
       setPreselected(preselected => [...preselected, preselectedData])
     })
-  });
+  }, []);
 
   const onSelect = (e) => {
     setSelected(e)
@@ -90,18 +90,77 @@ const Edit = (props) => {
     libraries
   })
 
+  const edit_profile_background = {
+    textAlign: "center",
+    position:"relative",
+    marginRight:"10%",
+    marginLeft:"10%",
+    marginTop: "2%",
+    marginBottom:"2%",
+    backgroundSize: "100% 100%",
+  }
+  const edit_profile_h1 = {
+    fontSize : "3vw",
+    textAlign : "center",
+    paddingTop:"0%",
+    paddingBottom:"2%",
+
+  }
+
+  const edit_profile_entry = {
+    width: "100%",
+    marginBottom: "1%",
+    marginLeft: "0%",
+    paddingBottom: "10px",
+    borderColor: "black",
+  }
+  const multiselect = {
+    searchBox: {
+      'border': '2px solid black',
+      'borderRadius': '0px',
+    }
+  }
+  const edit_profile_submit = {
+    cursor: "pointer",
+    color : "Black",
+    fontSize : "1.5vw",
+    border : "none",
+    borderRadius : "30px",
+    marginBottom: "0%",
+    marginTop: "0%",
+    // marginRight : "3%",
+    fontWeight : "bolder",
+    width: "10vw",
+  }
+
+  const edit_profile_cancel = {
+    backgroundSize : "100% 100%",
+    backgroundRepeat: "no-repeat",
+    color : "#0000EE",
+    fontSize : "1.5vw",
+    border : "none",
+    borderRadius : "30px",
+    marginBottom: "0%",
+    marginTop: "0%",
+    marginRight : "10%",
+    fontWeight : "bolder",
+    textDecoration : "underline",
+    width: "10vw",
+  }
+
   if (!isLoaded) return "Loading...";
 
   {if (sessionId === props?.volunteer?.userId) {
     return(
-      <div>
+      <div style={edit_profile_background}>
         <form onSubmit={submitData}>
-          <h1>Become a Volunteer</h1>
+          <h2>Edit your profile</h2>
           <input
             autoFocus
             onChange={(e) => setName(e.target.value)}
             type="text"
             value={name}
+            style={edit_profile_entry}
           />
           <PlacesAutocomplete
             value={address}
@@ -109,7 +168,7 @@ const Edit = (props) => {
           >
             {({ getInputProps, suggestions, getSuggestionItemProps }) => (
               <div>
-                <input {...getInputProps({ placeholder: "Type address" })} />
+                <input {...getInputProps({ placeholder: "Type address" })} style={edit_profile_entry}/>
 
                 <div>
                   {suggestions.map(suggestion => {
@@ -134,6 +193,7 @@ const Edit = (props) => {
             placeholder="Radius"
             type="number"
             value={radius}
+            style={edit_profile_entry}
           />
           <input
             autoFocus
@@ -141,13 +201,7 @@ const Edit = (props) => {
             placeholder="Phone Number"
             type="text"
             value={phone}
-          />
-          <textarea
-            cols={50}
-            onChange={(e) => setNotes(e.target.value)}
-            placeholder="Notes"
-            rows={8}
-            value={notes}
+            style={edit_profile_entry}
           />
           <Multiselect
             displayValue="title"
@@ -157,9 +211,20 @@ const Edit = (props) => {
             showCheckbox
             placeholder="Please select the locations you will be donating to"
             selectedValues={preselected}
+            style={multiselect}
           />
-          <input disabled={!name || !address || !selected} type="submit" value="Edit" />
-          <a className="back" href="#" onClick={() => Router.push(`/profile/${props.volunteer.userId}`)}>
+          <br/>
+          <textarea
+            cols={50}
+            onChange={(e) => setNotes(e.target.value)}
+            placeholder="Notes"
+            rows={8}
+            value={notes}
+            style={edit_profile_entry}
+          />
+
+          <input style = {edit_profile_submit} disabled={!name || !address || !selected} type="submit" value="Edit" />
+          <a style = {edit_profile_cancel} className="back" href="#" onClick={() => Router.push(`/profile/${props.volunteer.userId}`)}>
             or Cancel
           </a>
         </form>
@@ -168,7 +233,7 @@ const Edit = (props) => {
   } else {
     return(
       <div>
-        <p>Sorry this is not your account</p>
+        <h2>Sorry this is not your account</h2>
       </div>
     )
   }

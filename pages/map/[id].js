@@ -6,6 +6,7 @@ import PlacesAutocomplete, {geocodeByAddress, getLatLng} from "react-places-auto
 import Link from "next/link";
 import {FaLocationArrow} from "react-icons/fa";
 import Router from "next/router";
+import Card from 'react-bootstrap/Card';
 
 const libraries = ["places"];
 
@@ -32,7 +33,7 @@ export const getServerSideProps = async ({params}) => {
 }
 
 const containerStyle = {
-  width: '70%',
+  width: '100%',
   height: '100%',
 };
 
@@ -145,21 +146,8 @@ const App = ({ location, volunteers }) => {
   }
 
   if (isLoaded) {
-    console.log(coords)
     return(
       <div>
-        <div id="sidebar" className="panel">
-          <div id="content">
-            <h2>
-              {location.title}
-            </h2>
-            <p>{location.address}</p>
-            <p>{location.phone}</p>
-            <a href={location.website}>{location.website}</a>
-            <p>{locBikes} bikes have been donated to {location.title} and {locHours} hours have been spent volunteering.</p>
-          </div>
-        </div>
-
         <div className="map-container">
           <GoogleMap
             zoom={9}
@@ -264,8 +252,22 @@ const App = ({ location, volunteers }) => {
             }
           </GoogleMap>
         </div>
-
+        <div className="card-container">
+          <Card style={{ width: '22rem' }} className="map-card">
+            <Card.Body>
+              <Card.Title>{location.title}</Card.Title>
+              <Card.Text>
+                <p>Address: {location.address}</p>
+                <p>Phone Number: {location.phone}</p>
+                <p>Website: <a href={location.website}>{location.website}</a></p>
+                <br/>
+                <p>{locBikes} bikes have been donated to {location.title} through The Bike Center and {locHours} hours have been spent volunteering.</p>
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </div>
         <div className="input-container2">
+
           <PlacesAutocomplete
             value={address}
             onChange={setAddress}

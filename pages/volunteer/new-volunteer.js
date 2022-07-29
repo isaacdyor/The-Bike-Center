@@ -13,8 +13,6 @@ const Volunteer = () => {
     marginLeft : "13vw",
   }
   const newvol_background = {
-    backgroundImage: "url('https://c4.wallpaperflare.com/wallpaper/963/87/601/light-blue-background-hd-wallpaper-wallpaper-preview.jpg')",
-    backgroundRepeat: "no-repeat",
     backgroundSize: "100% 100%",
     marginBottom:"0px",
     paddingTop:"10px",
@@ -33,20 +31,10 @@ const Volunteer = () => {
     width: "80vw",
     marginLeft : "5vw",
     fontSize : "max(2vw, 10px)",
-    fontWeight: "900",
+    fontWeight: "200",
     textAlign: "center",
     paddingBottom: "5vw",
-    color: "white",
-    textShadow:"-2px 3px 0 #000",    
-  }
-  const img_one = {
-    float : "left",
-    transform: "scaleX(-1)",
-    width: "20vw",
-  }
-  const img_two =  {
-    float : "right",
-    width: "20vw",
+    color: "dark-grey",
   }
   return(
     <div style = {newvol_background}>

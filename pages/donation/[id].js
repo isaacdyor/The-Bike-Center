@@ -3,15 +3,20 @@ import Router from 'next/router';
 import Link from 'next/link';
 import {useSession} from "next-auth/react";
 import Multiselect from 'multiselect-react-dropdown';
-import prisma from "../lib/prisma";
+import prisma from "../../lib/prisma";
 import {useLoadScript} from "@react-google-maps/api";
 
 const libraries = ['places']
 
-export const getServerSideProps = async (context) => {
+export const getServerSideProps = async ({params}) => {
   const locations = await prisma.location.findMany();
+  const volunteer = await prisma.volunteer.findUnique({
+    where: {
+      userId: String(params?.id),
+    },
+  });
 
-  return { props: { locations } }
+  return { props: { locations, volunteer } }
 
 }
 
@@ -35,7 +40,7 @@ const Volunteer = (props) => {
         body: JSON.stringify(body),
       });
       const data = await response.json()
-      await Router.push('/map');
+      await Router.push(`/profile/donations/${props.volunteer.id}`);
     } catch (error) {
       console.error(error);
     }
@@ -51,7 +56,7 @@ const Volunteer = (props) => {
       }
       setOptions(options => [...options, optionData])
     })
-  });
+  }, []);
 
 
   const onSelect = (e) => {
@@ -71,60 +76,63 @@ const Volunteer = (props) => {
   const donation_background = {
     textAlign: "center",
     position:"relative",
-    marginRight:"10%",
-    marginLeft:"10%",
+    marginRight:"15%",
+    marginLeft:"15%",
     marginTop: "2%",
     marginBottom:"2%",
-    backgroundImage: "url('https://c4.wallpaperflare.com/wallpaper/963/87/601/light-blue-background-hd-wallpaper-wallpaper-preview.jpg')",
     backgroundRepeat: "no-repeat",
     backgroundSize: "100% 100%",
   }
   const donation_h1 = {
-    fontSize : "3vw",
+    fontSize : "3.5vw",
     textAlign : "center",
-    paddingTop:"2%"
+    paddingTop:"0%"
   }
   const donation_frame =  {
-    
+
 
   }
   const donation_entry = {
-    width: "90%",
-    marginBottom: "5%",
+    width: "100%",
+    marginBottom: "1%",
     marginLeft: "0%",
-    paddingBottom: "15px",
+    paddingBottom: "10px",
+    borderColor: "black",
   }
+  const multiselect = {
+    searchBox: {
+      'border': '2px solid black',
+      'borderRadius': '0px',
+    }
+  }
+
   const donation_submit = {
-    backgroundImage : "url(https://www.xmple.com/wallpaper/sunburst-burst-green-rays-white-1920x1080-c2-32cd32-ffffff-k2-50-50-l2-30-0-a-6-f-22.svg)",
-    backgroundSize : "100% 100%",
-    backgroundRepeat: "no-repeat",
+    cursor: "pointer",
     color : "Black",
     fontSize : "1.5vw",
     border : "none",
     borderRadius : "30px",
-    marginBottom: "1%",
-    marginTop: "1%",
-    marginRight : "3%",
+    marginBottom: "0%",
+    marginTop: "0%",
+    // marginRight : "3%",
     fontWeight : "bolder",
     width: "10vw",
-    }
+  }
 
-    const donation_cancel = {
-      backgroundSize : "100% 100%",
-      backgroundRepeat: "no-repeat",
-      color : "#ff7373",
-      fontSize : "1.5vw",
-      border : "none",
-      borderRadius : "30px",
-      marginBottom: "1%",
-      marginTop: "1%",
-      marginRight : "10%",
-      fontWeight : "bolder",
-      textDecoration : "underline",
-      width: "10vw",
-      
-  
-      }
+  const donation_cancel = {
+    backgroundSize : "100% 100%",
+    backgroundRepeat: "no-repeat",
+    color : "#0000EE",
+    fontSize : "1.5vw",
+    border : "none",
+    borderRadius : "30px",
+    marginBottom: "0%",
+    marginTop: "0%",
+    marginRight : "10%",
+    fontWeight : "bolder",
+    textDecoration : "underline",
+    width: "10vw",
+  }
 
   if (!session) {
     return(
@@ -137,7 +145,7 @@ const Volunteer = (props) => {
   return(
     <div style={donation_background}>
       <form style={donation_frame} onSubmit={submitData}>
-        <h1 style = {donation_h1}>Fill Out This Form <br/>Once You Complete A Donation</h1><br/>
+        <h1 style = {donation_h1}>Fill Out This Form Once You Complete A Donation</h1><br/>
 
         <input
           autoFocus
@@ -147,31 +155,21 @@ const Volunteer = (props) => {
           value={bikes}
           style={donation_entry}
         />
-        <br/>
-        
+
         <input
-          autoFocus
+          // autoFocus
           onChange={(e) => setHours(e.target.value)}
           placeholder="Number of hours volunteered"
           type="number"
           value={hours}
           style={donation_entry}
         />
-        <br/>
         <input
-          autoFocus
+          // autoFocus
           onChange={(e) => setValue(e.target.value)}
           placeholder="Approximate value of goods donated in dollars"
           type="number"
           value={value}
-          style={donation_entry}
-        />
-        <textarea
-          cols={50}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Description of goods donated"
-          rows={8}
-          value={description}
           style={donation_entry}
         />
         <Multiselect
@@ -182,9 +180,18 @@ const Volunteer = (props) => {
           showCheckbox
           placeholder="Location that you donated the bikes to"
           selectionLimit={1}
+          style={multiselect}
         />
-
-        <input disabled={!bikes || !hours } type="submit" value="Create" style={donation_submit}/>
+        <br/>
+        <textarea
+          cols={50}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Description of goods donated"
+          rows={8}
+          value={description}
+          style={donation_entry}
+        />
+        <input disabled={!bikes || !hours } type="submit" value="Submit" style={donation_submit}/>
         <a style = {donation_cancel} className="back" href="#" onClick={() => Router.push('/')}>
           Or Cancel
         </a>

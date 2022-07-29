@@ -6,6 +6,8 @@ import {useSession} from "next-auth/react";
 import Multiselect from 'multiselect-react-dropdown';
 import prisma from "../../lib/prisma";
 import {useLoadScript} from "@react-google-maps/api";
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
 
 const libraries = ['places']
 
@@ -96,59 +98,61 @@ const Volunteer = ({locations, volunteer, assignments}) => {
   })
 
   //styling
-  const voluneteer_background = {
+  const volunteer_background = {
     textAlign: "center",
     position:"relative",
     marginRight:"10%",
     marginLeft:"10%",
     marginTop: "2%",
     marginBottom:"2%",
-    backgroundImage: "url('https://c4.wallpaperflare.com/wallpaper/963/87/601/light-blue-background-hd-wallpaper-wallpaper-preview.jpg')",
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "100% 100%",
+    backgroundSize: "90% 90%",
   }
-  const volunteer_h1 = {
-    fontSize : "3vw",
-    textAlign : "center",
-    paddingTop:"2%",
-    
-  }
- 
+
   const volunteer_entry = {
-    width: "90%",
-    marginBottom: "5%",
+    width: "100%",
+    marginBottom: "1%",
     marginLeft: "0%",
-    paddingBottom: "15px",
+    paddingBottom: "10px",
+    borderColor: "black",
+  }
+  const multiselect = {
+    searchBox: {
+      'border': '2px solid black',
+      'borderRadius': '0px',
+    }
   }
   const volunteer_submit = {
-    backgroundImage : "url(https://www.xmple.com/wallpaper/sunburst-burst-green-rays-white-1920x1080-c2-32cd32-ffffff-k2-50-50-l2-30-0-a-6-f-22.svg)",
-    backgroundSize : "100% 100%",
-    backgroundRepeat: "no-repeat",
+    cursor: "pointer",
     color : "Black",
     fontSize : "1.5vw",
     border : "none",
     borderRadius : "30px",
-    marginBottom: "1%",
-    marginTop: "1%",
-    marginRight : "3%",
+    marginBottom: "0%",
+    marginTop: "0%",
+    // marginRight : "3%",
     fontWeight : "bolder",
     width: "10vw",
-    }
+  }
+  const assignment_submit = {
+    cursor: "pointer",
+    borderRadius : "10px",
+    marginRight : "1%",
+  }
 
-    const volunteer_cancel = {
-      backgroundSize : "100% 100%",
-      backgroundRepeat: "no-repeat",
-      color : "#ff7373",
-      fontSize : "1.5vw",
-      border : "none",
-      borderRadius : "30px",
-      marginBottom: "1%",
-      marginTop: "1%",
-      marginRight : "10%",
-      fontWeight : "bolder",
-      textDecoration : "underline",
-      width: "10vw",
-      }
+  const volunteer_cancel = {
+    backgroundSize : "100% 100%",
+    backgroundRepeat: "no-repeat",
+    color : "#0000EE",
+    fontSize : "1.5vw",
+    border : "none",
+    borderRadius : "30px",
+    marginBottom: "0%",
+    marginTop: "0%",
+    marginRight : "10%",
+    fontWeight : "bolder",
+    textDecoration : "underline",
+    width: "10vw",
+  }
  
       
   if (!isLoaded) return "Loading...";
@@ -164,36 +168,47 @@ const Volunteer = ({locations, volunteer, assignments}) => {
   if (volunteer !== undefined && session.user.id === volunteer?.userId) {
     return(
       <div>
-        <h1 style = {volunteer_h1}>Assignments</h1>
-        <hr/>
+        <h2>Assignments</h2>
+
         {assignments[0]?.name === undefined ? (
           <p>You currently have no assignments</p>
         ) : (
           <></>
         )}
-        {assignments.map(assignment => {
-          return(
-            <div key={assignment.id}>
-              <p>{assignment.name}</p>
-              <p>{assignment.address}</p>
-              <p>{assignment.email}</p>
-              <p>{assignment.phone}</p>
-              <p>{assignment.bikes}</p>
-              <p>{assignment.notes}</p>
-              <p>{assignment.location.title}</p>
-              <button onClick={() => markComplete(assignment.id)}>Mark Complete</button>
-              <hr/>
-            </div>
-          )
-        })}
+
+        <div className="container">
+          <div className="row">
+            {assignments.map(assignment => {
+              return(
+                <div key={assignment.id} className="col-lg-6 col-md-12 centered">
+                  <Card style={{ width: '35rem', marginBottom: '15px', }}>
+                    <Card.Body>
+                      <Card.Text>
+                        <p>Name: {assignment.name}</p>
+                        <p>Address: {assignment.address}</p>
+                        <p>Email: {assignment.email}</p>
+                        <p>Phone Number: {assignment.phone}</p>
+                        <p>Number of Bikes: {assignment.bikes}</p>
+                        <p>Notes: {assignment.notes}</p>
+                        <p>Location: {assignment.location.title}</p>
+
+                      </Card.Text>
+                      <Button style = {assignment_submit} variant="primary" onClick={() => markComplete(assignment.id)}>Mark Complete</Button>
+
+                    </Card.Body>
+                  </Card>
+                </div>
+              )
+            })}
+          </div>
+        </div>
       </div>
     )
   }
-
   return(
-    <div style = {voluneteer_background}>
+    <div style = {volunteer_background}>
       <form onSubmit={submitData}>
-        <h1 style={volunteer_h1}>Become a Volunteer</h1>
+        <h2>Become a Volunteer</h2>
         <input
           autoFocus
           onChange={(e) => setName(e.target.value)}
@@ -228,7 +243,6 @@ const Volunteer = ({locations, volunteer, assignments}) => {
           )}
         </PlacesAutocomplete>
         <input
-          autoFocus
           onChange={(e) => setRadius(e.target.value)}
           placeholder="Radius (Miles)"
           type="number"
@@ -236,19 +250,10 @@ const Volunteer = ({locations, volunteer, assignments}) => {
           style =  {volunteer_entry}
         />
         <input
-          autoFocus
           onChange={(e) => setPhone(e.target.value)}
           placeholder="Phone Number"
           type="text"
           value={phone}
-          style =  {volunteer_entry}
-        />
-        <textarea
-          cols={50}
-          onChange={(e) => setNotes(e.target.value)}
-          placeholder="Notes"
-          rows={8}
-          value={notes}
           style =  {volunteer_entry}
         />
         <Multiselect
@@ -258,7 +263,18 @@ const Volunteer = ({locations, volunteer, assignments}) => {
           options={options}
           showCheckbox
           placeholder="Please select the locations you will be donating to"
+          style =  {multiselect}
         />
+        <br/>
+        <textarea
+          cols={50}
+          onChange={(e) => setNotes(e.target.value)}
+          placeholder="Notes"
+          rows={8}
+          value={notes}
+          style =  {volunteer_entry}
+        />
+
 
         <input disabled={!name || !address || !radius || !selected} type="submit" value="Create" style = {volunteer_submit}/>
         <a style = {volunteer_cancel} className="back" href="#" onClick={() => Router.push('/')}>

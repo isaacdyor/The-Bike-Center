@@ -5,9 +5,12 @@ import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import 'react-intersection-observer'
 import {useInView} from 'react-intersection-observer';
+
 import Image from 'next/image'
-
-
+import img1 from '../public/img1.jpg'
+import img2 from '../public/img2.jpg'
+import img3 from '../public/img3.jpg'
+import img4 from '../public/img4.jpg'
 
 export default function Header (props) {
   const router = useRouter();
@@ -25,15 +28,10 @@ export default function Header (props) {
     backgroundRepeat: "no-repeat",
     backgroundSize: "100% 200%",
     marginTop: "3vw",
-    position: "relative",
-    marginRight: "35vw",
+
   }
-  const arrow_gif = {
-    marginTop: "-7vw",
-    marginLeft: "18vw",
-    float: "left",
-    width: "15vw",
-  }
+
+ 
   const h1_end_styling = {
     textAlign : "center",
     fontSize: "6vw",
@@ -52,8 +50,9 @@ export default function Header (props) {
       <Body />
       <div style={home_end_styling}>
         <h1 style={h1_end_styling}>Sign Up To Become A Part Of Our Mission!</h1>
-        <Image width={400} height={400} alt="" style={arrow_gif} src="https://i.pinimg.com/originals/44/67/ce/4467ceda95866abb6e9060609fc81360.gif"/>
-        <Link href="/api/auth/signin"><button style={button_style}>Become A Volunteer</button></Link>
+        <div>
+          <Link href="/api/auth/signin"><button style={button_style}>Become A Volunteer</button></Link>
+        </div>
       </div>
     </div>   
     )
@@ -66,33 +65,13 @@ export default function Header (props) {
 };
 
 const Body = () => {
+
   const {ref: animation1, inView: isInView1} =  useInView();
   const {ref: animation2, inView: isInView2} =  useInView();
   const {ref: animation3, inView: isInView3} =  useInView();
   const {ref: animation4, inView: isInView4} =  useInView();
 
-  const home1_styling = {
-    width : "100%",
-    height : "40vw",
-    backgroundImage: "url('https://c4.wallpaperflare.com/wallpaper/963/87/601/light-blue-background-hd-wallpaper-wallpaper-preview.jpg')",
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "100% 100%",
-  }
-  const gif_styling = {
-    width : "85vw",
-    height : "25vw",
-    paddingLeft: "15vw",
-    textAlign:"center",
-
-  }
-  const h1_styling = {
-    transfrom: "translateY(-50%)",
-    textAlign : "center",
-    paddingTop: "5vw",
-    fontSize: "6vw",
-  }
-
-  const home2_styling = {
+   const home2_styling = {
     width : "100%",
     height : "35vw",
     backgroundColor : "white",
@@ -121,29 +100,43 @@ const Body = () => {
     fontWeight: "300",
   }
   const home_text_left = {
+    paddingTop: "3vw",
     float: "left",
     width: "50%",
-    paddingLeft: "10%",
+    paddingLeft: "5%",
+    paddingRight: "5%",
   }
   const home_text_right = {
+    paddingTop: "3vw",
     float: "right",
     width: "50%",
-    paddingRight: "10%",
+    paddingRight: "5%",
+    paddingLeft: "5%",
   }
   const home_image_right = {
     float: "right",
-    width: "40%",
-    height: "40%",
-    paddingRight: "10%",
-    paddingTop: "5%",
+    paddingRight: "10vw",
+    paddingLeft: "5vw",
+    paddingTop: "3vw",
   }
   const home_image_left = {
     float: "left",
-    width: "40%",
-    height: "40%",
-    paddingLeft: "10%",
-    paddingTop: "5%",
+    marginLeft: "10vw",
+    paddingRight: "15vw",
+    marginTop: "4vw",
   }
+  const img_container_right =  {
+    marginRight: "3vw",
+    paddingTop: "3vw",
+    marginLeft: "10vw",
+  }
+  
+  const img_container_left =  {
+    marginLeft: "3vw",
+    paddingTop: "3vw",
+    marginRight: "10vw",
+  }
+
   return(
     <div id="container">
       <div ref = {animation1} id ="homestyle" className = {isInView1? 'fadeIn' : 'noFade'} style={home2_styling}>
@@ -151,8 +144,8 @@ const Body = () => {
           <h2 style={h2_styling}>Cool Blurb One</h2>
           <h4 style={h4_styling}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar arcu at urna mattis tempor. Morbi quis ante at risus pellentesque finibus vel eget risus. Nullam at elementum erat, nec tempus velit. Nam ac lorem massa.</h4>
         </div>
-        <div>
-          <Image width={500} height={500} alt="" style={home_image_right} src="https://images.pexels.com/photos/100582/pexels-photo-100582.jpeg?h=1000&w=1500&fit=crop&markalign=center%2Cmiddle&txt=pexels.com&txtalign=center&txtsize=60&txtclr=eeffffff&txtfont=Avenir-Heavy&txtshad=10&mark=https%3A%2F%2Fassets.imgix.net%2F~text%3Ftxtclr%3Dfff%26txtsize%3D120%26txtpad%3D20%26bg%3D80000000%26txtfont%3DAvenir-Heavy%26txtalign%3Dcenter%26w%3D1300%26txt%3DFree%2520Stock%2520Photos"/>
+        <div style = {img_container_right}>
+          <Image layout="responsive" style={home_image_right} width={400} height={200} alt="Bike Image 1"  src={img1}/>
         </div>
       </div>
       <div ref = {animation2} id ="homestyle" className = {isInView2? 'fadeIn' : 'noFade'} style={home3_styling}>
@@ -160,8 +153,8 @@ const Body = () => {
           <h2 style={h2_styling}>Cool Blurb Two</h2>
           <h4 style={h4_styling}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar arcu at urna mattis tempor. Morbi quis ante at risus pellentesque finibus vel eget risus. Nullam at elementum erat, nec tempus velit. Nam ac lorem massa.</h4>
         </div>
-        <div>
-          <Image width={500} height={500} alt="" style={home_image_left} src="https://images.pexels.com/photos/71104/utah-mountain-biking-bike-biking-71104.jpeg"/>
+        <div style={img_container_left}>
+          <Image layout = "responsive" width={400} height={200} alt="Bike Image 2" style={home_image_left} src={img2}/>
         </div>
       </div>
       <div ref = {animation3} id ="homestyle" className = {isInView3? 'fadeIn' : 'noFade'} style={home4_styling}>
@@ -169,8 +162,8 @@ const Body = () => {
           <h2 style={h2_styling}>Cool Blurb Three</h2>
           <h4 style={h4_styling}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar arcu at urna mattis tempor. Morbi quis ante at risus pellentesque finibus vel eget risus. Nullam at elementum erat, nec tempus velit. Nam ac lorem massa.</h4>
         </div>
-        <div>
-          <Image width={500} height={500} alt="" style={home_image_right} src="https://images.pexels.com/photos/2943358/pexels-photo-2943358.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"/>
+        <div style = {img_container_right}>
+          <Image layout = "responsive" width={400} height={200} alt="Bike Image 3" style={home_image_right} src={img3}/>
         </div>
       </div>
       <div ref = {animation4} id ="homestyle" className = {isInView4? 'fadeIn' : 'noFade'} style={home5_styling}>
@@ -178,8 +171,8 @@ const Body = () => {
           <h2 style={h2_styling}>Cool Blurb Four</h2>
           <h4 style={h4_styling}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar arcu at urna mattis tempor. Morbi quis ante at risus pellentesque finibus vel eget risus. Nullam at elementum erat, nec tempus velit. Nam ac lorem massa.</h4>
         </div>
-        <div>
-          <Image width={500} height={500} alt="" style={home_image_left} src="https://images.pexels.com/photos/1149601/pexels-photo-1149601.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"/>
+        <div style={img_container_left}>
+          <Image layout = "responsive" width={400} height={200} alt="Bike Image 4" style={home_image_left} src={img4}/>
         </div>
       </div>
     </div>

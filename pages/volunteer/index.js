@@ -1,7 +1,11 @@
 import React from "react";
 import Link from 'next/link'
+import {useSession} from "next-auth/react";
+import {useEffect} from "react";
+import Router from "next/router";
 
 const Home = () => {
+  const { data: session, status } = useSession();
   const denied_h1 = {
     textAlign: "center",
     fontSize: "30px",
@@ -20,6 +24,12 @@ const Home = () => {
     borderColor:"white",
     borderRadius:"20px",
 
+  }
+  if (session) {
+    Router.push(`/volunteer/${session?.user?.id}`)
+    return(
+      <h2>Redirecting...</h2>
+    )
   }
   return(
     <div>

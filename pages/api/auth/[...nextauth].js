@@ -8,9 +8,13 @@ export default NextAuth({
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      checks:"both",
     }),
   ],
   callbacks: {
+    async redirect({ id }) {
+      return '/volunteer'
+    },
     session: async ({ session, token }) => {
       if (session?.user) {
         session.user.id = token.uid;

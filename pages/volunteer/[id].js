@@ -153,6 +153,11 @@ const Volunteer = ({locations, volunteer, assignments}) => {
     textDecoration : "underline",
     width: "10vw",
   }
+
+  const title_style = {
+    marginBottom: "2.5%",
+    marginTop: "1%",
+  }
  
       
   if (!isLoaded) return "Loading...";
@@ -168,7 +173,7 @@ const Volunteer = ({locations, volunteer, assignments}) => {
   if (volunteer !== undefined && session.user.id === volunteer?.userId) {
     return(
       <div>
-        <h2>Assignments</h2>
+        <h2 style={title_style}>Assignments</h2>
 
         {assignments[0]?.name === undefined ? (
           <p>You currently have no assignments</p>

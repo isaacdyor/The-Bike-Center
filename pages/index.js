@@ -1,16 +1,17 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import React from 'react';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import 'react-intersection-observer'
 import {useInView} from 'react-intersection-observer';
+import Button from "react-bootstrap/Button";
 
 import Image from 'next/image'
-import img1 from '../public/img1.jpg'
-import img2 from '../public/img2.jpg'
-import img3 from '../public/img3.jpg'
-import img4 from '../public/img4.jpg'
+import alex from '../public/alexcropped.jpg'
+import bikes from '../public/horizontalcropped.jpg'
+import three from '../public/themcropped.jpg'
+import eastside from '../public/eastsidecropped.jpg'
 
 export default function Header (props) {
   const router = useRouter();
@@ -18,15 +19,10 @@ export default function Header (props) {
 
   const button_style = {
     textAlign: "center",
-    width: "max(25vw,200px)",
-    height: "70px",
     fontSize: "min(3vw,35px)",
     marginBottom: "3vw",
     border: "none",
     borderRadius: "30px",
-    backgroundImage: "url('https://c4.wallpaperflare.com/wallpaper/963/87/601/light-blue-background-hd-wallpaper-wallpaper-preview.jpg')",
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "100% 200%",
     marginTop: "3vw",
 
   }
@@ -43,15 +39,24 @@ export default function Header (props) {
     textAlign: "center",
     paddingTop: "5vw",
   }
+  const h1_styling = {
+    transfrom: "translateY(-50%)",
+    textAlign : "center",
+    paddingTop: "1vw",
+    fontSize: "6vw",
+  }
 
   if (!session) {
     return(
     <div id="container">
+      <h1 style={h1_styling}>The Bike Center</h1>
       <Body />
       <div style={home_end_styling}>
         <h1 style={h1_end_styling}>Sign Up To Become A Part Of Our Mission!</h1>
         <div>
-          <Link href="/api/auth/signin"><button style={button_style}>Become A Volunteer</button></Link>
+
+
+          <Link href="/api/auth/signin"><Button style={button_style} variant="primary">Become A Volunteer</Button></Link>
         </div>
       </div>
     </div>   
@@ -59,6 +64,7 @@ export default function Header (props) {
   }
   return(
     <div id="container">
+      <h1 style={h1_styling}>The Bike Center</h1>
       <Body />
     </div>
   )
@@ -141,38 +147,47 @@ const Body = () => {
     <div id="container">
       <div ref = {animation1} id ="homestyle" className = {isInView1? 'fadeIn' : 'noFade'} style={home2_styling}>
         <div style={home_text_left}>
-          <h2 style={h2_styling}>Cool Blurb One</h2>
-          <h4 style={h4_styling}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar arcu at urna mattis tempor. Morbi quis ante at risus pellentesque finibus vel eget risus. Nullam at elementum erat, nec tempus velit. Nam ac lorem massa.</h4>
+          <h2 style={h2_styling}>How It Works</h2>
+          <h4 style={h4_styling}>If you need your bike transported to a nearby donation location please
+          navigate to the <Link href="/map"><a>map</a></Link> page and select a volunteer near you. Click on their
+          icon and press the request pickup button and fill out the form. The volunteer will then contact you to schedule a pickup.</h4>
         </div>
         <div style = {img_container_right}>
-          <Image layout="responsive" style={home_image_right} width={400} height={200} alt="Bike Image 1"  src={img1}/>
+          <Image layout="responsive" style={home_image_right} width={400} height={200} alt="Bike Image 1"  src={bikes}/>
         </div>
       </div>
       <div ref = {animation2} id ="homestyle" className = {isInView2? 'fadeIn' : 'noFade'} style={home3_styling}>
         <div style={home_text_right}>
-          <h2 style={h2_styling}>Cool Blurb Two</h2>
-          <h4 style={h4_styling}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar arcu at urna mattis tempor. Morbi quis ante at risus pellentesque finibus vel eget risus. Nullam at elementum erat, nec tempus velit. Nam ac lorem massa.</h4>
+          <h2 style={h2_styling}>About Us</h2>
+          <h4 style={h4_styling}>This organization started in the Summer of 2021 where we
+          started collecting bikes from our neighbors to donate to Bike Works. We wanted to expand our
+          work beyond just our neighborhood which is why we created The Bike Center.</h4>
         </div>
         <div style={img_container_left}>
-          <Image layout = "responsive" width={400} height={200} alt="Bike Image 2" style={home_image_left} src={img2}/>
+          <Image layout = "responsive" width={400} height={200} alt="Bike Image 2" style={home_image_left} src={alex}/>
         </div>
       </div>
       <div ref = {animation3} id ="homestyle" className = {isInView3? 'fadeIn' : 'noFade'} style={home4_styling}>
         <div style={home_text_left}>
-          <h2 style={h2_styling}>Cool Blurb Three</h2>
-          <h4 style={h4_styling}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar arcu at urna mattis tempor. Morbi quis ante at risus pellentesque finibus vel eget risus. Nullam at elementum erat, nec tempus velit. Nam ac lorem massa.</h4>
+          <h2 style={h2_styling}>Our Mission</h2>
+          <h4 style={h4_styling}>Our goal at The Bike Center is to make the bike donation process as easy as possible
+          for donors in hopes of encouraging more bike donations. We plan to do this by creating a network of volunteers
+          that will transport the bike to the donation location so that people who have bikes but no means of transportation
+          can still help out the community. </h4>
         </div>
         <div style = {img_container_right}>
-          <Image layout = "responsive" width={400} height={200} alt="Bike Image 3" style={home_image_right} src={img3}/>
+          <Image layout = "responsive" width={400} height={200} alt="Bike Image 3" style={home_image_right} src={three}/>
         </div>
       </div>
       <div ref = {animation4} id ="homestyle" className = {isInView4? 'fadeIn' : 'noFade'} style={home5_styling}>
         <div style={home_text_right}>
-          <h2 style={h2_styling}>Cool Blurb Four</h2>
-          <h4 style={h4_styling}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar arcu at urna mattis tempor. Morbi quis ante at risus pellentesque finibus vel eget risus. Nullam at elementum erat, nec tempus velit. Nam ac lorem massa.</h4>
+          <h2 style={h2_styling}>How You Can Help</h2>
+          <h4 style={h4_styling}>We are looking to expand our network of volunteers so if you are interested in
+          helping out your community by providing bikes to the people who need them most, please consider&nbsp;
+          <Link href="/volunteer"><a>becoming a volunteer</a></Link> to help transport bikes for people near you.</h4>
         </div>
         <div style={img_container_left}>
-          <Image layout = "responsive" width={400} height={200} alt="Bike Image 4" style={home_image_left} src={img4}/>
+          <Image layout = "responsive" width={400} height={200} alt="Bike Image 4" style={home_image_left} src={eastside}/>
         </div>
       </div>
     </div>

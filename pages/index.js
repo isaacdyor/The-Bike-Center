@@ -79,22 +79,22 @@ const Body = () => {
 
    const home2_styling = {
     width : "100%",
-    height : "35vw",
+    // height : "30vw",
     backgroundColor : "white",
   }
   const home3_styling = {
     width : "100%",
-    height : "35vw",
+    // height : "30vw",
     backgroundColor : "#f5f5f5",
   }
   const home4_styling = {
     width : "100%",
-    height : "35vw",
+    // height : "30vw",
     backgroundColor : "white",
   }
   const home5_styling = {
     width : "100%",
-    height : "35vw",
+    height : "0vw",
     backgroundColor : "#f5f5f5",
   }
 
@@ -145,7 +145,7 @@ const Body = () => {
 
   return(
     <div id="container">
-      <div ref = {animation1} id ="homestyle" className = {isInView1? 'fadeIn' : 'noFade'} style={home2_styling}>
+      <div ref = {animation1} id ="homestyle" className = {isInView1? 'fadeIn home_width' : 'noFade home_width'} style={home2_styling}>
         <div style={home_text_left}>
           <h2 style={h2_styling}>How It Works</h2>
           <h4 style={h4_styling}>If you need your bike transported to a nearby donation location please
@@ -156,7 +156,7 @@ const Body = () => {
           <Image layout="responsive" style={home_image_right} width={400} height={200} alt="Bike Image 1"  src={bikes}/>
         </div>
       </div>
-      <div ref = {animation2} id ="homestyle" className = {isInView2? 'fadeIn' : 'noFade'} style={home3_styling}>
+      <div ref = {animation2} id ="homestyle" className = {isInView2? 'fadeIn home_width' : 'noFade home_width'} style={home3_styling}>
         <div style={home_text_right}>
           <h2 style={h2_styling}>About Us</h2>
           <h4 style={h4_styling}>This organization started in the Summer of 2021 where we
@@ -167,7 +167,7 @@ const Body = () => {
           <Image layout = "responsive" width={400} height={200} alt="Bike Image 2" style={home_image_left} src={alex}/>
         </div>
       </div>
-      <div ref = {animation3} id ="homestyle" className = {isInView3? 'fadeIn' : 'noFade'} style={home4_styling}>
+      <div ref = {animation3} id ="homestyle" className = {isInView3? 'fadeIn home_width' : 'noFade home_width'} style={home4_styling}>
         <div style={home_text_left}>
           <h2 style={h2_styling}>Our Mission</h2>
           <h4 style={h4_styling}>Our goal at The Bike Center is to make the bike donation process as easy as possible
@@ -179,15 +179,15 @@ const Body = () => {
           <Image layout = "responsive" width={400} height={200} alt="Bike Image 3" style={home_image_right} src={three}/>
         </div>
       </div>
-      <div ref = {animation4} id ="homestyle" className = {isInView4? 'fadeIn' : 'noFade'} style={home5_styling}>
+      <div ref = {animation4} id ="homestyle" className = {isInView4? 'fadeIn home_width' : 'noFade home_width'} style={home3_styling}>
         <div style={home_text_right}>
-          <h2 style={h2_styling}>How You Can Help</h2>
+          <h2 style={h2_styling}>How To Help</h2>
           <h4 style={h4_styling}>We are looking to expand our network of volunteers so if you are interested in
-          helping out your community by providing bikes to the people who need them most, please consider&nbsp;
-          <Link href="/volunteer"><a>becoming a volunteer</a></Link> to help transport bikes for people near you.</h4>
+            helping out your community by providing bikes to the people who need them most, please consider&nbsp;
+            <Link href="/volunteer"><a>becoming a volunteer</a></Link> to help transport bikes for people near you.</h4>
         </div>
         <div style={img_container_left}>
-          <Image layout = "responsive" width={400} height={200} alt="Bike Image 4" style={home_image_left} src={eastside}/>
+          <Image layout = "responsive" width={400} height={200} alt="Bike Image 2" style={home_image_left} src={eastside}/>
         </div>
       </div>
     </div>

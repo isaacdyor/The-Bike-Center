@@ -5,6 +5,7 @@ import {useSession} from "next-auth/react";
 import Multiselect from 'multiselect-react-dropdown';
 import prisma from "../../lib/prisma";
 import {useLoadScript} from "@react-google-maps/api";
+import Button from "react-bootstrap/Button";
 
 const libraries = ['places']
 
@@ -108,15 +109,12 @@ const Volunteer = (props) => {
 
   const donation_submit = {
     cursor: "pointer",
-    color : "Black",
-    fontSize : "1.5vw",
-    border : "none",
-    borderRadius : "30px",
-    marginBottom: "0%",
-    marginTop: "0%",
-    // marginRight : "3%",
-    fontWeight : "bolder",
-    width: "10vw",
+    textAlign: "center",
+    fontSize: "20px",
+    border: "none",
+    borderRadius: "5px",
+    backgroundColor: "#0275d8",
+    color: "white",
   }
 
   const donation_cancel = {
@@ -133,6 +131,7 @@ const Volunteer = (props) => {
     textDecoration : "underline",
     width: "10vw",
   }
+
 
   if (!session) {
     return(
@@ -191,6 +190,7 @@ const Volunteer = (props) => {
           value={description}
           style={donation_entry}
         />
+
         <input disabled={!bikes || !hours } type="submit" value="Submit" style={donation_submit}/>
         <a style = {donation_cancel} className="back" href="#" onClick={() => Router.push('/')}>
           Or Cancel

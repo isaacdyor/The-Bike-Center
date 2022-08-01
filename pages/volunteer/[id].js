@@ -123,15 +123,12 @@ const Volunteer = ({locations, volunteer, assignments}) => {
   }
   const volunteer_submit = {
     cursor: "pointer",
-    color : "Black",
-    fontSize : "1.5vw",
-    border : "none",
-    borderRadius : "30px",
-    marginBottom: "0%",
-    marginTop: "0%",
-    // marginRight : "3%",
-    fontWeight : "bolder",
-    width: "10vw",
+    textAlign: "center",
+    fontSize: "20px",
+    border: "none",
+    borderRadius: "5px",
+    backgroundColor: "#0275d8",
+    color: "white",
   }
   const assignment_submit = {
     cursor: "pointer",
@@ -143,7 +140,7 @@ const Volunteer = ({locations, volunteer, assignments}) => {
     backgroundSize : "100% 100%",
     backgroundRepeat: "no-repeat",
     color : "#0000EE",
-    fontSize : "1.5vw",
+    fontSize : "20px",
     border : "none",
     borderRadius : "30px",
     marginBottom: "0%",
@@ -280,8 +277,8 @@ const Volunteer = ({locations, volunteer, assignments}) => {
           style =  {volunteer_entry}
         />
 
+        <input disabled={!name || !address || !radius || !selected} type="submit" value="Create" style = {volunteer_submit} />
 
-        <input disabled={!name || !address || !radius || !selected} type="submit" value="Create" style = {volunteer_submit}/>
         <a style = {volunteer_cancel} className="back" href="#" onClick={() => Router.push('/')}>
           Or Cancel
         </a>

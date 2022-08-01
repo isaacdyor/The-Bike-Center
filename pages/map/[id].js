@@ -7,6 +7,11 @@ import Link from "next/link";
 import {FaLocationArrow} from "react-icons/fa";
 import Router from "next/router";
 import Card from 'react-bootstrap/Card';
+import Button from "react-bootstrap/Button";
+
+import Image from 'next/image'
+import locationIcon from '../../public/location-icon.png'
+
 
 const libraries = ["places"];
 
@@ -137,6 +142,13 @@ const App = ({ location, volunteers }) => {
     mapRef2.current.setZoom(11.5);
   }, [])
 
+  const button_style = {
+    textAlign: "center",
+    fontSize: "15px",
+    border: "none",
+    borderRadius: "5px",
+  }
+
   if (!isLoaded) {
     return (
       <div>
@@ -240,7 +252,7 @@ const App = ({ location, volunteers }) => {
                     <p>{volSelected.notes}</p>
                     <p>{bikes} bikes donated</p>
                     <p>{hours} hours volunteered</p>
-                    <button onClick={() => Router.push(`/transport/${volSelected.userId}`)}>Request a pickup</button>
+                    <Link href={`/transport/${volSelected.userId}`}><Button style={button_style} variant="primary">Request a pickup</Button></Link>
                   </div>
                 </InfoWindow>
                 <Circle
@@ -256,13 +268,11 @@ const App = ({ location, volunteers }) => {
           <Card style={{ width: '22rem' }} className="map-card">
             <Card.Body>
               <Card.Title>{location.title}</Card.Title>
-              <Card.Text>
-                <p>Address: {location.address}</p>
-                <p>Phone Number: {location.phone}</p>
-                <p>Website: <a href={location.website}>{location.website}</a></p>
-                <br/>
-                <p>{locBikes} bikes have been donated to {location.title} through The Bike Center and {locHours} hours have been spent volunteering.</p>
-              </Card.Text>
+              <p>Address: {location.address}</p>
+              <p>Phone Number: {location.phone}</p>
+              <p>Website: <a href={location.website}>{location.website}</a></p>
+              <br/>
+              <p>{locBikes} bikes have been donated to {location.title} through The Bike Center and {locHours} hours have been spent volunteering.</p>
             </Card.Body>
           </Card>
         </div>
@@ -307,7 +317,12 @@ const App = ({ location, volunteers }) => {
                   lng: position.coords.longitude,
                 })
               }, () => null);
-            }}><FaLocationArrow /></button>
+            }}><Image
+            width={40}
+            height={40}
+            alt="location icon"
+            src={locationIcon}/>
+          </button>
         </div>
       </div>
     )

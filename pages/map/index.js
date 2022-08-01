@@ -6,7 +6,13 @@ import Link from 'next/link'
 
 import { FaLocationArrow } from 'react-icons/fa';
 import Router from "next/router";
+import Button from "react-bootstrap/Button";
 const libraries = ["places"];
+
+import Image from 'next/image'
+import locationIcon from '../../public/location-icon.png'
+import three from "../../public/themcropped.jpg";
+import Card from "react-bootstrap/Card";
 
 export const getServerSideProps = async () => {
   const locations = await prisma.location.findMany({
@@ -42,6 +48,8 @@ const App = ({ locations, volunteers }) => {
   const [volSelected, setVolSelected] = useState(null);
   const [bikes, setBikes] = useState(0)
   const [hours, setHours] = useState(0)
+  const [locationChecked, setLocationChecked] = useState(true)
+  const [volunteerChecked, setVolunteerChecked] = useState(true)
   const mapRef2 = useRef();
 
   const options = {
@@ -118,6 +126,13 @@ const App = ({ locations, volunteers }) => {
     mapRef2.current.setZoom(11.5);
   }, [])
 
+  const button_style = {
+    textAlign: "center",
+    fontSize: "15px",
+    border: "none",
+    borderRadius: "5px",
+  }
+
   if (!isLoaded) {
     return (
       <div>
@@ -137,6 +152,7 @@ const App = ({ locations, volunteers }) => {
             options={options}
             onLoad={onMapLoad}
           >
+            {/*{locationChecked && }*/}
             {coords.map(coord => {
               return(
                 <Marker
@@ -179,12 +195,12 @@ const App = ({ locations, volunteers }) => {
                       }
                     })
                   }}
-                  icon={{
-                    url: '/user-solid.svg',
-                    origin: new window.google.maps.Point(0, 0),
-                    anchor: new window.google.maps.Point(15, 15),
-                    scaledSize: new window.google.maps.Size(30, 30),
-                  }}
+                  // icon={{
+                  //   url: '/user-solid.svg',
+                  //   origin: new window.google.maps.Point(0, 0),
+                  //   anchor: new window.google.maps.Point(15, 15),
+                  //   scaledSize: new window.google.maps.Size(30, 30),
+                  // }}
                 />
               )
             })}
@@ -224,7 +240,7 @@ const App = ({ locations, volunteers }) => {
                     <p>{volSelected.notes}</p>
                     <p>{bikes} bikes donated</p>
                     <p>{hours} hours volunteered</p>
-                    <button onClick={() => Router.push(`/transport/${volSelected.userId}`)}>Request a pickup</button>
+                    <Link href={`/transport/${volSelected.userId}`}><Button style={button_style} variant="primary">Request a pickup</Button></Link>
                   </div>
                 </InfoWindow>
                 <Circle
@@ -235,6 +251,32 @@ const App = ({ locations, volunteers }) => {
             ) : null
             }
           </GoogleMap>
+        </div>
+        <div className="card-container">
+          <Card style={{ width: '22rem' }} className="map-card">
+            <Card.Body>
+              <Card.Title>Key</Card.Title>
+
+              <input
+                id="location-check"
+                type="checkbox"
+                checked={locationChecked}
+                onChange={() => {
+                  setLocationChecked(!locationChecked)
+                }}
+              />
+              <label htmlFor="location-check">&nbsp; Drop-off Locations</label><br/>
+
+              <input
+                type="checkbox"
+                checked={volunteerChecked}
+                onChange={() => {
+                  setVolunteerChecked(!volunteerChecked)
+                }}
+              />
+              <label htmlFor="location-check">&nbsp; Volunteers</label><br/>
+            </Card.Body>
+          </Card>
         </div>
 
         <div className="input-container">
@@ -277,7 +319,13 @@ const App = ({ locations, volunteers }) => {
                   lng: position.coords.longitude,
                 })
               }, () => null);
-            }}><FaLocationArrow /></button>
+            }}>
+            <Image
+              width={40}
+              height={40}
+              alt="location icon"
+              src={locationIcon}/>
+          </button>
         </div>
       </div>
     )

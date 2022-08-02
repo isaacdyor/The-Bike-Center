@@ -170,7 +170,7 @@ const App = ({ locations, volunteers }) => {
                       icon={{
                         url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
                         origin: new window.google.maps.Point(0, 0),
-                        anchor: new window.google.maps.Point(10, 34),
+                        anchor: new window.google.maps.Point(20, 40),
                         scaledSize: new window.google.maps.Size(40, 40),
                       }}
                     />
@@ -206,7 +206,7 @@ const App = ({ locations, volunteers }) => {
                       icon={{
                         url: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
                         origin: new window.google.maps.Point(0, 0),
-                        anchor: new window.google.maps.Point(10, 34),
+                        anchor: new window.google.maps.Point(20, 40),
                         scaledSize: new window.google.maps.Size(40, 40),
                       }}
                     />
@@ -228,9 +228,9 @@ const App = ({ locations, volunteers }) => {
                   <h2>
                     Location: <Link href={`/map/${selected.id}`}><a>{selected.title}</a></Link>
                   </h2>
-                  <p>{selected.address}</p>
-                  <p>{selected.phone}</p>
-                  <a href={selected.website}>More Info</a>
+                  <p>Address: {selected.address}</p>
+                  <p>Phone Number: {selected.phone}</p>
+                  <p>Website: <a href={selected.website}>{selected.website}</a></p>
 
                 </div>
               </InfoWindow>
@@ -249,7 +249,7 @@ const App = ({ locations, volunteers }) => {
                     <h2>
                       Volunteer: <Link href={`/profile/${volSelected.userId}`}><a>{volSelected.name}</a></Link>
                     </h2>
-                    <p>{volSelected.notes}</p>
+                    <p>Notes: Will pick up bikes within {volSelected.radius} miles. {volSelected.notes}</p>
                     <p>{bikes} bikes donated</p>
                     <p>{hours} hours volunteered</p>
                     <Link href={`/transport/${volSelected.userId}`}><Button style={button_style} variant="primary">Request a pickup</Button></Link>

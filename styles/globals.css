@@ -55,20 +55,52 @@ h2 {
     z-index: 10;
 }
 
-@media only screen and (max-width: 940px) {
+.input-container2{
+    position: absolute;
+    top: 4rem;
+    left: 70%;
+    transform: translateX(-70%);
+    width: 100%;
+    max-width: 400px;
+    z-index: 0;
+}
+
+@media only screen and (max-width: 870px) {
     .card-container {
         display: none;
+    }
+    .input-container2{
+        position: absolute;
+        top: 4rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 400px;
+        z-index: 0;
     }
 }
 
 .home_width {
     height : 30vw;
 }
-@media (max-width: 500px) {
+
+@media only screen and (max-width: 350px) {
+    .home_width {
+        height : 57vw;
+    }
+}
+@media only screen and (max-width: 400px) and (min-width: 351px){
+    .home_width {
+        height : 52vw;
+    }
+}
+@media only screen and (max-width: 500px) and (min-width: 401px){
     .home_width {
         height : 45vw;
     }
 }
+
+
 
 .search input {
     padding: 0.5rem;
@@ -103,15 +135,7 @@ h2 {
     z-index: 0;
 }
 
-.input-container2{
-    position: absolute;
-    top: 4rem;
-    left: 65%;
-    transform: translateX(-65%);
-    width: 100%;
-    max-width: 400px;
-    z-index: 0;
-}
+
 
 .fadeIn {
     animation: fadeIn 1.7s;

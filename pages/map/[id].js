@@ -58,6 +58,8 @@ const App = ({ location, volunteers }) => {
   const [hours, setHours] = useState(0)
   const [locBikes, setLocBikes] =useState(0)
   const [locHours, setLocHours] =useState(0)
+  const [locationChecked, setLocationChecked] = useState(true)
+  const [volunteerChecked, setVolunteerChecked] = useState(true)
   const mapRef2 = useRef();
 
   const options = {
@@ -168,57 +170,66 @@ const App = ({ location, volunteers }) => {
             options={options}
             onLoad={onMapLoad}
           >
-            {coords.map(coord => {
-              return(
-                <Marker
-                  key={coord.lat}
-                  position={{ lat: parseFloat(coord.lat), lng: parseFloat(coord.lng) }}
-                  onClick={() => {
-                    onCenterChanged()
-                    setSelected(coord);
-                    setVolSelected(null);
-                  }}
-                  icon={{
-                    url: '/building-solid.svg',
-                    origin: new window.google.maps.Point(0, 0),
-                    anchor: new window.google.maps.Point(15, 15),
-                    scaledSize: new window.google.maps.Size(30, 30),
-                  }}
-                />
-              )
-            })}
+            {locationChecked &&
+              <div>
+                {coords.map(coord => {
+                  return(
+                    <Marker
+                      key={coord.lat}
+                      position={{ lat: parseFloat(coord.lat), lng: parseFloat(coord.lng) }}
+                      onClick={() => {
+                        onCenterChanged()
+                        setSelected(coord);
+                        setVolSelected(null);
+                      }}
+                      icon={{
+                        url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+                        origin: new window.google.maps.Point(0, 0),
+                        anchor: new window.google.maps.Point(10, 34),
+                        scaledSize: new window.google.maps.Size(40, 40),
+                      }}
+                    />
+                  )
+                })}
+              </div>
+            }
 
-            {volCoords.map(volCoord => {
-              return(
-                <Marker
-                  key={volCoord.lat}
-                  position={{ lat: parseFloat(volCoord.lat), lng: parseFloat(volCoord.lng) }}
-                  onClick={() => {
-                    onCenterChanged()
-                    setVolSelected(volCoord);
-                    setSelected(null)
-                    setBikes(0)
-                    setHours(0)
-                    volCoord.donations.forEach(donation => {
-                      if (donation.approved) {
-                        setBikes(bikes+parseInt(donation.bikes))
-                      }
-                    })
-                    volCoord.donations.forEach(donation => {
-                      if (donation.approved) {
-                        setHours(hours+parseInt(donation.hours))
-                      }
-                    })
-                  }}
-                  icon={{
-                    url: '/user-solid.svg',
-                    origin: new window.google.maps.Point(0, 0),
-                    anchor: new window.google.maps.Point(15, 15),
-                    scaledSize: new window.google.maps.Size(30, 30),
-                  }}
-                />
-              )
-            })}
+            {volunteerChecked &&
+              <div>
+                {volCoords.map(volCoord => {
+                  return(
+                    <Marker
+                      key={volCoord.lat}
+                      position={{ lat: parseFloat(volCoord.lat), lng: parseFloat(volCoord.lng) }}
+                      onClick={() => {
+                        onCenterChanged()
+                        setVolSelected(volCoord);
+                        setSelected(null)
+                        setBikes(0)
+                        setHours(0)
+                        volCoord.donations.forEach(donation => {
+                          if (donation.approved) {
+                            setBikes(bikes+parseInt(donation.bikes))
+                          }
+                        })
+                        volCoord.donations.forEach(donation => {
+                          if (donation.approved) {
+                            setHours(hours+parseInt(donation.hours))
+                          }
+                        })
+                      }}
+                      icon={{
+                        url: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+                        origin: new window.google.maps.Point(0, 0),
+                        anchor: new window.google.maps.Point(10, 34),
+                        scaledSize: new window.google.maps.Size(40, 40),
+                      }}
+                    />
+                  )
+                })}
+              </div>
+            }
+
             {selected ? (
               <InfoWindow
                 position={{ lat: selected.lat, lng: selected.lng }}
@@ -265,7 +276,7 @@ const App = ({ location, volunteers }) => {
           </GoogleMap>
         </div>
         <div className="card-container">
-          <Card style={{ width: '22rem' }} className="map-card">
+          <Card style={{ width: '35vw' }} className="map-card">
             <Card.Body>
               <Card.Title>{location.title}</Card.Title>
               <p>Address: {location.address}</p>
@@ -273,6 +284,43 @@ const App = ({ location, volunteers }) => {
               <p>Website: <a href={location.website}>{location.website}</a></p>
               <br/>
               <p>{locBikes} bikes have been donated to {location.title} through The Bike Center and {locHours} hours have been spent volunteering.</p>
+              <h5>Key</h5>
+              <input
+                id="location-check"
+                type="checkbox"
+                checked={locationChecked}
+                onChange={() => {
+                  setLocationChecked(!locationChecked)
+                  onCenterChanged()
+                }}
+              />
+              <label htmlFor="location-check">
+                &nbsp; Drop-off Locations:
+                <Image
+                  src="http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+                  alt="blue pin"
+                  width={25}
+                  height={25}
+                />
+              </label><br/>
+
+              <input
+                type="checkbox"
+                checked={volunteerChecked}
+                onChange={() => {
+                  setVolunteerChecked(!volunteerChecked)
+                  onCenterChanged()
+                }}
+              />
+              <label htmlFor="location-check">
+                &nbsp; Volunteers
+                <Image
+                  src="http://maps.google.com/mapfiles/ms/icons/red-dot.png"
+                  alt="blue pin"
+                  width={25}
+                  height={25}
+                />
+              </label><br/>
             </Card.Body>
           </Card>
         </div>

@@ -49,20 +49,18 @@ const Donations = ({ donations, volunteer }) => {
           <div className="row">
             {donations.map(donation => {
               return(
-                <div key={donation.id} className="col-lg-6 col-md-12 centered">
-                  <Card style={{ width: '35rem', marginBottom: '15px', }}>
+                <div key={donation.id} className="col-lg-4 col-md-6 col-sm-12 centered">
+                  <Card style={{ width: 'min(90%, 400px)', marginBottom: '15px', }}>
                     <Card.Body>
-                      <Card.Text>
-                        <p>{donation.bikes} bikes</p>
-                        <p>{donation.hours} hours</p>
-                        <p>description: {donation.description}</p>
-                        <p>value: {donation.value}$</p>
-                        {donation.approved ? (
-                          <p>Approved</p>
-                        ) : (
-                          <p>Pending Approval</p>
-                        )}
-                      </Card.Text>
+                      <p>{donation.bikes} bikes</p>
+                      <p>{donation.hours} hours</p>
+                      <p>description: {donation.description}</p>
+                      <p>value: {donation.value}$</p>
+                      {donation.approved ? (
+                        <p>Approved</p>
+                      ) : (
+                        <p>Pending Approval</p>
+                      )}
                       <Button style={donation_button} variant="primary" onClick={() => Router.push(`/profile/donations/edit/${donation.id}`)}>Edit</Button>
                       <Button style={donation_button} variant="primary" onClick={async () => {
                         const result = confirm("Are you sure you want to delete your donation?");

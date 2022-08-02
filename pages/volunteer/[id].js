@@ -183,18 +183,15 @@ const Volunteer = ({locations, volunteer, assignments}) => {
             {assignments.map(assignment => {
               return(
                 <div key={assignment.id} className="col-lg-6 col-md-12 centered">
-                  <Card style={{ width: '35rem', marginBottom: '15px', }}>
+                  <Card style={{ width: '90%', marginBottom: '15px', }}>
                     <Card.Body>
-                      <Card.Text>
-                        <p>Name: {assignment.name}</p>
-                        <p>Address: {assignment.address}</p>
-                        <p>Email: {assignment.email}</p>
-                        <p>Phone Number: {assignment.phone}</p>
-                        <p>Number of Bikes: {assignment.bikes}</p>
-                        <p>Notes: {assignment.notes}</p>
-                        <p>Location: {assignment.location.title}</p>
-
-                      </Card.Text>
+                      <p>Name: {assignment.name}</p>
+                      <p>Address: {assignment.address}</p>
+                      <p>Email: {assignment.email}</p>
+                      <p>Phone Number: {assignment.phone}</p>
+                      <p>Number of Bikes: {assignment.bikes}</p>
+                      <p>Notes: {assignment.notes}</p>
+                      <p>Location: {assignment.location.title}</p>
                       <Button style = {assignment_submit} variant="primary" onClick={() => markComplete(assignment.id)}>Mark Complete</Button>
 
                     </Card.Body>

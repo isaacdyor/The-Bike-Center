@@ -134,23 +134,20 @@ const Profile = (props) => {
       <div style={profile_background}>
         <h2>Name: {props?.name}</h2>
         <br/>
-        <Card style={{ width: '35rem' }}>
+        <Card style={{ width: '90%' }}>
           <Card.Body>
             <Card.Title>Name: {props?.name}</Card.Title>
-            <Card.Text>
-
-              <p>Number of bikes donated: {bikes}</p>
-              <p>Number of hours volunteered: {hours}</p>
-              <p>Notes: {props?.notes}</p>
-              <h5>Locations user will donate bikes to:</h5>
-              {props?.locations.map(location => {
-                return(
-                  <div key={location.id}>
-                    <p>-{location.title}</p>
-                  </div>
-                )
-              })}
-            </Card.Text>
+            <p>Number of bikes donated: {bikes}</p>
+            <p>Number of hours volunteered: {hours}</p>
+            <p>Notes: {props?.notes}</p>
+            <h5>Locations user will donate bikes to:</h5>
+            {props?.locations.map(location => {
+              return(
+                <div key={location.id}>
+                  <p>-{location.title}</p>
+                </div>
+              )
+            })}
             <Button style={profile_button} variant="primary" onClick={() => Router.push(`/profile/donations/${props.id}`)}>See donations</Button>
             <Button style={profile_button} variant="primary" onClick={() => Router.push(`/transport/${props.userId}`)}>Request pickup</Button>
           </Card.Body>

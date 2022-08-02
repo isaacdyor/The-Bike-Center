@@ -121,7 +121,7 @@ const Volunteer = (props) => {
     backgroundSize : "100% 100%",
     backgroundRepeat: "no-repeat",
     color : "#0000EE",
-    fontSize : "1.5vw",
+    fontSize : "20px",
     border : "none",
     borderRadius : "30px",
     marginBottom: "0%",

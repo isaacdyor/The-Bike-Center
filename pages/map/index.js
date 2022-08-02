@@ -224,7 +224,7 @@ const App = ({ locations, volunteers }) => {
               >
                 <div>
                   <h2>
-                    <Link href={`/map/${selected.id}`}><a>{selected.title}</a></Link>
+                    Location: <Link href={`/map/${selected.id}`}><a>{selected.title}</a></Link>
                   </h2>
                   <p>{selected.address}</p>
                   <p>{selected.phone}</p>
@@ -245,7 +245,7 @@ const App = ({ locations, volunteers }) => {
                 >
                   <div>
                     <h2>
-                      <Link href={`/profile/${volSelected.userId}`}><a>{volSelected.name}</a></Link>
+                      Volunteer: <Link href={`/profile/${volSelected.userId}`}><a>{volSelected.name}</a></Link>
                     </h2>
                     <p>{volSelected.notes}</p>
                     <p>{bikes} bikes donated</p>

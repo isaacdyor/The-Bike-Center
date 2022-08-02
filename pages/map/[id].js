@@ -239,7 +239,7 @@ const App = ({ location, volunteers }) => {
                 }}
               >
                 <div>
-                  <h2>{selected.title}</h2>
+                  <h2>Location: {selected.title}</h2>
                   <p>{selected.address}</p>
                   <p>{selected.phone}</p>
                   <a href={selected.website}>More Info</a>
@@ -258,7 +258,7 @@ const App = ({ location, volunteers }) => {
                 >
                   <div>
                     <h2>
-                      <Link href={`/profile/${volSelected.userId}`}><a>{volSelected.name}</a></Link>
+                      Volunteer: <Link href={`/profile/${volSelected.userId}`}><a>{volSelected.name}</a></Link>
                     </h2>
                     <p>{volSelected.notes}</p>
                     <p>{bikes} bikes donated</p>

@@ -30,6 +30,7 @@ export const getServerSideProps = async () => {
 }
 
 const containerStyle = {
+  position: 'relative',
   width: '100%',
   height: '100%',
 };
@@ -67,6 +68,7 @@ const App = ({ locations, volunteers }) => {
     const latLng = await getLatLng(results[0]);
     setAddress(value);
     setCenter(latLng);
+    mapRef2.current.setZoom(11.5)
   };
 
   const convertVolunteer = async (value) => {
@@ -144,9 +146,9 @@ const App = ({ locations, volunteers }) => {
   if (isLoaded) {
     return(
       <div>
-        <div className="map-container">
+        <div className="map-container col-lg-12">
           <GoogleMap
-            zoom={9}
+            zoom={10}
             center={{lat: center.lat, lng: center.lng}}
             mapContainerStyle={containerStyle}
             options={options}

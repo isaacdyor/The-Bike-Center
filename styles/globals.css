@@ -21,7 +21,7 @@ h2 {
 }
 
 .map-container {
-    height: 93vh;
+    height: calc(100vh - 56px);
     width: 100vw;
     z-index: -2;
 }

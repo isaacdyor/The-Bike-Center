@@ -77,6 +77,7 @@ const App = ({ location, volunteers }) => {
     const latLng = await getLatLng(results[0]);
     setAddress(value);
     setCenter(latLng);
+    mapRef2.current.setZoom(11.5)
   };
 
   const convertVolunteer = async (value) => {

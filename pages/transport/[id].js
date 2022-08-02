@@ -86,7 +86,7 @@ const Transport = ({volunteer}) => {
         body: JSON.stringify(body),
       });
       const data = await response.json()
-      await Router.push('/');
+      await Router.push('/transport/new-pickup');
     } catch (error) {
       console.error(error);
     }

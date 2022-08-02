@@ -1,11 +1,10 @@
 import React from "react";
 import Link from 'next/link'
 import {useSession} from "next-auth/react";
-import Image from 'next/image'
 
 const Volunteer = () => {
   const { data: session, status } = useSession();
-  
+
   const newvol_h1 = {
     textAlign: "center",
     fontSize: "50px",
@@ -39,12 +38,11 @@ const Volunteer = () => {
   return(
     <div style = {newvol_background}>
       <div>
-        <h1 style = {newvol_h1}>Successfully Signed Up As A Volunteer!!!</h1>
+        <h1 style = {newvol_h1}>Successfully Requested A Pickup!!!</h1>
       </div>
-      
-      <h4 style = {h4_styling}>When someone requests you to pick up a bike for them an email will be sent to the email address you logged in with.
-      You can also find a list of all of your assignments on the <Link href={`/volunteer/${session?.user?.id}`}><a style = {newvol_a}>Volunteer</a></Link> page.
-      Once you have completed a donation you submit it at the <Link href={`/donation/${session?.user?.id}`}><a style = {newvol_a}>Donation</a></Link> page.</h4>
+
+      <h4 style = {h4_styling}>The volunteer you just requested will send you an email within the next couple of
+      days so you can schedule a pickup. Thank you for using The Bike Center!</h4>
 
     </div>
   )

@@ -8,10 +8,9 @@ export default async function handle(req, res) {
     to: volEmail,
     from: 'efcisaac07@gmail.com',
     subject: 'New Pickup Request',
-    text: `${name} has requested you to pick up ${bikes} bike/s from ${address}.
-    To schedule a pickup time either email them at ${email} or call or text them at ${phone}.
-    They want this bike to be donated to ${selected[0]?.title}.
-    They left the following note: ${notes}. Thank you.`,
+    text: `${name} has requested you to pick up ${bikes} bike/s from ${address}. To schedule a pickup time either email them at ${email} or call or text them at ${phone}. They want this bike to be donated to ${selected[0]?.title}. They left the following note: ${notes} 
+    Please do the pickup in their front yard or somewhere public for your own safety. 
+    Thank you for volunteering -The Bike Center`,
   };
 
   try {

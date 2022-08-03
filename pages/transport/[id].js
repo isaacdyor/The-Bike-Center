@@ -38,6 +38,12 @@ const Transport = ({volunteer}) => {
   const [preSelected, setPreSelected] = useState([])
   const [id, setId] = useState(volunteer.userId)
   const [volEmail, setVolEmail] = useState(volunteer.user.email)
+  const [nameSelected, setNameSelected] = useState(true)
+  const [emailSelected, setEmailSelected] = useState(false)
+  const [addressSelected, setAddressSelected] = useState(false)
+  const [numberSelected, setNumberSelected] = useState(false)
+  const [bikesSelected, setBikesSelected] = useState(false)
+  const [notesSelected, setNotesSelected] = useState(false)
   const { data: session } = useSession();
 
   useEffect(() => {
@@ -70,10 +76,6 @@ const Transport = ({volunteer}) => {
 
   const onRemove = (e) => {
     setSelected(e)
-  }
-  const sendMail = async () => {
-
-
   }
 
   const submitData = async (e) => {
@@ -146,6 +148,7 @@ const Transport = ({volunteer}) => {
     borderRadius: "5px",
     backgroundColor: "#0275d8",
     color: "white",
+    marginTop: "10px",
   }
 
   const transport_cancel = {
@@ -156,12 +159,19 @@ const Transport = ({volunteer}) => {
     border : "none",
     borderRadius : "30px",
     marginBottom: "0%",
-    marginTop: "0%",
+    marginTop: "10",
     marginRight : "10%",
     fontWeight : "bolder",
     textDecoration : "underline",
     width: "10vw",
   }
+
+  const label_style = {
+    textAlign: "left",
+    marginBottom: "0%",
+    marginTop: "1%",
+  }
+
 
   if (!isLoaded) return "Loading...";
 
@@ -170,6 +180,7 @@ const Transport = ({volunteer}) => {
       <h1 style={transport_h1}>Request a pickup from {volunteer.name}</h1>
 
       <form onSubmit={submitData}>
+        { nameSelected && <p style={label_style}>Name:</p>}
         <input
           autoFocus
           onChange={(e) => setName(e.target.value)}
@@ -177,24 +188,34 @@ const Transport = ({volunteer}) => {
           type="text"
           value={name}
           style =  {transport_entry}
+          onFocus={() => {setNameSelected(true)}}
+          onBlur={() => {setNameSelected(false)}}
         />
         <br/>
+        { emailSelected && <p style={label_style}>Email:</p>}
         <input
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
           type="text"
           value={email}
           style =  {transport_entry}
+          onFocus={() => {setEmailSelected(true)}}
+          onBlur={() => {setEmailSelected(false)}}
         />
         <br/>
-
+        { addressSelected && <p style={label_style}>Address:</p>}
         <PlacesAutocomplete
           value={address}
           onChange={setAddress}
         >
           {({ getInputProps, suggestions, getSuggestionItemProps }) => (
             <div>
-              <input style =  {transport_entry} {...getInputProps({ placeholder: "Address" })} />
+              <input
+                style={transport_entry}
+                {...getInputProps({ placeholder: "Address" })}
+                onFocus={() => {setAddressSelected(true)}}
+                onBlur={() => {setAddressSelected(false)}}
+              />
 
               <div>
                 {suggestions.map(suggestion => {
@@ -213,19 +234,25 @@ const Transport = ({volunteer}) => {
             </div>
           )}
         </PlacesAutocomplete>
+        { numberSelected && <p style={label_style}>Phone Number:</p>}
         <input
           onChange={(e) => setPhone(e.target.value)}
           placeholder="Phone Number"
           type="text"
           value={phone}
           style =  {transport_entry}
+          onFocus={() => {setNumberSelected(true)}}
+          onBlur={() => {setNumberSelected(false)}}
         />
+        { bikesSelected && <p style={label_style}>Number of bikes being donated:</p>}
         <input
           onChange={(e) => setBikes(e.target.value)}
           placeholder="Number of bikes being donated"
           type="number"
           value={bikes}
           style =  {transport_entry}
+          onFocus={() => {setBikesSelected(true)}}
+          onBlur={() => {setBikesSelected(false)}}
         />
         <Multiselect
           displayValue="title"
@@ -239,6 +266,7 @@ const Transport = ({volunteer}) => {
           style =  {multiselect}
         />
         <br/>
+        { notesSelected && <p style={label_style}>Notes:</p>}
         <textarea
           cols={50}
           onChange={(e) => setNotes(e.target.value)}
@@ -246,6 +274,8 @@ const Transport = ({volunteer}) => {
           rows={8}
           value={notes}
           style =  {transport_entry}
+          onFocus={() => {setNotesSelected(true)}}
+          onBlur={() => {setNotesSelected(false)}}
         />
 
         <br/>

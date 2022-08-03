@@ -144,6 +144,10 @@ const Edit = (props) => {
     textDecoration : "underline",
     width: "10vw",
   }
+  const label_style = {
+    textAlign: "left",
+    marginBottom: "0%",
+  }
 
   if (!isLoaded) return "Loading...";
 
@@ -152,13 +156,16 @@ const Edit = (props) => {
       <div style={edit_profile_background}>
         <form onSubmit={submitData}>
           <h2>Edit your profile</h2>
+          <p style={label_style}>Name:</p>
           <input
             autoFocus
             onChange={(e) => setName(e.target.value)}
             type="text"
+            placeholder="Name"
             value={name}
             style={edit_profile_entry}
           />
+          <p style={label_style}>Address:</p>
           <PlacesAutocomplete
             value={address}
             onChange={setAddress}
@@ -184,14 +191,16 @@ const Edit = (props) => {
               </div>
             )}
           </PlacesAutocomplete>
+          <p style={label_style}>How many miles you are willing to drive to pick up a bike:</p>
           <input
             autoFocus
             onChange={(e) => setRadius(e.target.value)}
-            placeholder="Radius"
+            placeholder="Radius (miles)"
             type="number"
             value={radius}
             style={edit_profile_entry}
           />
+          <p style={label_style}>Phone Number:</p>
           <input
             autoFocus
             onChange={(e) => setPhone(e.target.value)}
@@ -209,15 +218,6 @@ const Edit = (props) => {
             placeholder="Please select the locations you will be donating to"
             selectedValues={preselected}
             style={multiselect}
-          />
-          <br/>
-          <textarea
-            cols={50}
-            onChange={(e) => setNotes(e.target.value)}
-            placeholder="Notes"
-            rows={8}
-            value={notes}
-            style={edit_profile_entry}
           />
 
           <input style = {edit_profile_submit} disabled={!name || !address || !selected} type="submit" value="Edit" />

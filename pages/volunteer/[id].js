@@ -44,6 +44,10 @@ const Volunteer = ({locations, volunteer, assignments}) => {
   const [notes, setNotes] = useState('');
   const [options, setOptions] = useState([])
   const [selected, setSelected] = useState([])
+  const [nameSelected, setNameSelected] = useState(true)
+  const [addressSelected, setAddressSelected] = useState(false)
+  const [radiusSelected, setRadiusSelected] = useState(false)
+  const [phoneSelected, setPhoneSelected] = useState(false)
   const [isVolunteer, setIsVolunteer] = useState(false)
   const [completed, setCompleted] = useState(true)
   const { data: session, status } = useSession();
@@ -155,6 +159,12 @@ const Volunteer = ({locations, volunteer, assignments}) => {
     marginBottom: "2.5%",
     marginTop: "1%",
   }
+
+  const label_style = {
+    textAlign: "left",
+    marginBottom: "0%",
+
+  }
  
       
   if (!isLoaded) return "Loading...";
@@ -207,7 +217,8 @@ const Volunteer = ({locations, volunteer, assignments}) => {
   return(
     <div style = {volunteer_background}>
       <form onSubmit={submitData}>
-        <h2>Become a Volunteer</h2>
+        <h2 style={title_style}>Become a Volunteer</h2>
+        { nameSelected && <p style={label_style}>Name:</p>}
         <input
           autoFocus
           onChange={(e) => setName(e.target.value)}
@@ -215,14 +226,22 @@ const Volunteer = ({locations, volunteer, assignments}) => {
           type="text"
           value={name}
           style =  {volunteer_entry}
+          onFocus={() => {setNameSelected(true)}}
+          onBlur={() => {setNameSelected(false)}}
         />
+        { addressSelected && <p style={label_style}>Address:</p>}
         <PlacesAutocomplete
           value={address}
           onChange={setAddress}
         >
           {({ getInputProps, suggestions, getSuggestionItemProps }) => (
             <div>
-              <input style =  {volunteer_entry} {...getInputProps({ placeholder: "Type address" })} />
+              <input
+                style={volunteer_entry}
+                {...getInputProps({ placeholder: "Address" })}
+                onFocus={() => {setAddressSelected(true)}}
+                onBlur={() => {setAddressSelected(false)}}
+              />
 
               <div>
                 {suggestions.map(suggestion => {
@@ -241,19 +260,25 @@ const Volunteer = ({locations, volunteer, assignments}) => {
             </div>
           )}
         </PlacesAutocomplete>
+        { radiusSelected && <p style={label_style}>How many miles you are willing to drive to pick up a bike:</p>}
         <input
           onChange={(e) => setRadius(e.target.value)}
           placeholder="Radius (Miles)"
           type="number"
           value={radius}
           style =  {volunteer_entry}
+          onFocus={() => {setRadiusSelected(true)}}
+          onBlur={() => {setRadiusSelected(false)}}
         />
+        { phoneSelected && <p style={label_style}>Phone Number:</p>}
         <input
           onChange={(e) => setPhone(e.target.value)}
           placeholder="Phone Number"
           type="text"
           value={phone}
           style =  {volunteer_entry}
+          onFocus={() => {setPhoneSelected(true)}}
+          onBlur={() => {setPhoneSelected(false)}}
         />
         <Multiselect
           displayValue="title"
@@ -265,14 +290,6 @@ const Volunteer = ({locations, volunteer, assignments}) => {
           style =  {multiselect}
         />
         <br/>
-        <textarea
-          cols={50}
-          onChange={(e) => setNotes(e.target.value)}
-          placeholder="Notes"
-          rows={8}
-          value={notes}
-          style =  {volunteer_entry}
-        />
 
         <input disabled={!name || !address || !radius || !selected} type="submit" value="Create" style = {volunteer_submit} />
 

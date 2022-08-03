@@ -95,6 +95,10 @@ const Edit = ({ donation, locations }) => {
     textDecoration : "underline",
     width: "10vw",
   }
+  const label_style = {
+    textAlign: "left",
+    marginBottom: "0%",
+  }
 
   {if (sessionId === donation?.volunteer?.userId) {
     return(
@@ -102,7 +106,7 @@ const Edit = ({ donation, locations }) => {
         <form onSubmit={submitData}>
           <h2>Edit your donation</h2>
           <br/>
-          <p>Number of bikes donated:</p>
+          <p style={label_style}>Number of bikes donated:</p>
           <input
             autoFocus
             onChange={(e) => setBikes(e.target.value)}
@@ -112,7 +116,7 @@ const Edit = ({ donation, locations }) => {
             style={donation_edit_entry}
           />
           <br/>
-          <p>Number of hours donated:</p>
+          <p style={label_style}>Number of hours donated:</p>
           <input
             autoFocus
             onChange={(e) => setHours(e.target.value)}
@@ -121,7 +125,7 @@ const Edit = ({ donation, locations }) => {
             value={hours}
             style={donation_edit_entry}
           />
-          <p>Approximate value of goods donated (in dollars):</p>
+          <p style={label_style}>Approximate value of goods donated (in dollars):</p>
           <input
             autoFocus
             onChange={(e) => setValue(e.target.value)}
@@ -130,7 +134,7 @@ const Edit = ({ donation, locations }) => {
             value={value}
             style={donation_edit_entry}
           />
-          <p>Description of goods donated:</p>
+          <p style={label_style}>Description of goods donated:</p>
           <textarea
             cols={50}
             onChange={(e) => setDescription(e.target.value)}

@@ -42,7 +42,9 @@ const Volunteer = () => {
       </div>
 
       <h4 style = {h4_styling}>The volunteer you just requested will send you an email within the next couple of
-      days so you can schedule a pickup. Thank you for using The Bike Center!</h4>
+      days so you can schedule a pickup. Please offer to do the pickup in your front yard or somewhere public,
+        and do not invite the volunteer into your backyard or house. This is just for the safety of the volunteer.
+        Thank you for using The Bike Center!</h4>
 
     </div>
   )

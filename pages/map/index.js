@@ -249,7 +249,7 @@ const App = ({ locations, volunteers }) => {
                     <h2>
                       Volunteer: <Link href={`/profile/${volSelected.userId}`}><a>{volSelected.name}</a></Link>
                     </h2>
-                    <p>Notes: Will pick up bikes within {volSelected.radius} miles. {volSelected.notes}</p>
+                    <p>Notes: Will pick up bikes within {volSelected.radius} miles.</p>
                     <p>{bikes} bikes donated</p>
                     <p>{hours} hours volunteered</p>
                     <Link href={`/transport/${volSelected.userId}`}><Button style={button_style} variant="primary">Request a pickup</Button></Link>

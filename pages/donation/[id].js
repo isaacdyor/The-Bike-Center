@@ -28,6 +28,10 @@ const Volunteer = (props) => {
   const [value, setValue] = useState('');
   const [options, setOptions] = useState([])
   const [selected, setSelected] = useState([])
+  const [bikesSelected, setBikesSelected] = useState(true)
+  const [hoursSelected, setHoursSelected] = useState(false)
+  const [descriptionSelected, setDescriptionSelected] = useState(false)
+
   const { data: session } = useSession();
 
   const submitData = async (e) => {
@@ -131,6 +135,11 @@ const Volunteer = (props) => {
     textDecoration : "underline",
     width: "10vw",
   }
+  const label_style = {
+    textAlign: "left",
+    marginBottom: "0%",
+    marginTop: "1%",
+  }
 
 
   if (!session) {
@@ -145,7 +154,7 @@ const Volunteer = (props) => {
     <div style={donation_background}>
       <form style={donation_frame} onSubmit={submitData}>
         <h1 style = {donation_h1}>Fill Out This Form Once You Complete A Donation</h1><br/>
-
+        { bikesSelected && <p style={label_style}>Number of bikes donated:</p>}
         <input
           autoFocus
           onChange={(e) => setBikes(e.target.value)}
@@ -153,24 +162,21 @@ const Volunteer = (props) => {
           type="number"
           value={bikes}
           style={donation_entry}
+          onFocus={() => {setBikesSelected(true)}}
+          onBlur={() => {setBikesSelected(false)}}
         />
-
+        <br/>
+        { hoursSelected && <p style={label_style}>Number of hours volunteered:</p>}
         <input
-          // autoFocus
           onChange={(e) => setHours(e.target.value)}
           placeholder="Number of hours volunteered"
           type="number"
           value={hours}
           style={donation_entry}
+          onFocus={() => {setHoursSelected(true)}}
+          onBlur={() => {setHoursSelected(false)}}
         />
-        <input
-          // autoFocus
-          onChange={(e) => setValue(e.target.value)}
-          placeholder="Approximate value of goods donated in dollars"
-          type="number"
-          value={value}
-          style={donation_entry}
-        />
+        <br/>
         <Multiselect
           displayValue="title"
           onRemove={onRemove}
@@ -182,6 +188,7 @@ const Volunteer = (props) => {
           style={multiselect}
         />
         <br/>
+        { descriptionSelected && <p style={label_style}>Description of goods donated:</p>}
         <textarea
           cols={50}
           onChange={(e) => setDescription(e.target.value)}
@@ -189,6 +196,8 @@ const Volunteer = (props) => {
           rows={8}
           value={description}
           style={donation_entry}
+          onFocus={() => {setDescriptionSelected(true)}}
+          onBlur={() => {setDescriptionSelected(false)}}
         />
 
         <input disabled={!bikes || !hours } type="submit" value="Submit" style={donation_submit}/>

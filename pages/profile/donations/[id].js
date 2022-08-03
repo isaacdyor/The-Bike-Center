@@ -52,14 +52,13 @@ const Donations = ({ donations, volunteer }) => {
                 <div key={donation.id} className="col-lg-4 col-md-6 col-sm-12 centered">
                   <Card style={{ width: 'min(90%, 400px)', marginBottom: '15px', }}>
                     <Card.Body>
-                      <p>{donation.bikes} bikes</p>
-                      <p>{donation.hours} hours</p>
-                      <p>description: {donation.description}</p>
-                      <p>value: {donation.value}$</p>
+                      <p>Number of bikes donated: {donation.bikes}</p>
+                      <p>Number of hours volunteered: {donation.hours}</p>
+                      <p>Description of goods donated: {donation.description}</p>
                       {donation.approved ? (
-                        <p>Approved</p>
+                        <p>Approval status: Approved</p>
                       ) : (
-                        <p>Pending Approval</p>
+                        <p>Approval status: Pending Approval</p>
                       )}
                       <Button style={donation_button} variant="primary" onClick={() => Router.push(`/profile/donations/edit/${donation.id}`)}>Edit</Button>
                       <Button style={donation_button} variant="primary" onClick={async () => {

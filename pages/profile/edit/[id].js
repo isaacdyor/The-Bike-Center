@@ -220,7 +220,7 @@ const Edit = (props) => {
             style={multiselect}
           />
 
-          <input style = {edit_profile_submit} disabled={!name || !address || !selected} type="submit" value="Edit" />
+          <input style = {edit_profile_submit} disabled={!name || !address || !selected} type="submit" value="Update" />
           <a style = {edit_profile_cancel} className="back" href="#" onClick={() => Router.push(`/profile/${props.volunteer.userId}`)}>
             or Cancel
           </a>

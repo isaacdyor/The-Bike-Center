@@ -31,17 +31,13 @@ const Profile = (props) => {
   const { data: session, status } = useSession();
 
   useEffect(() => {
-    props?.volunteer?.donations.forEach(donation => {
+    props?.donations?.forEach(donation => {
       if (donation.approved) {
-        setBikes(bikes+parseInt(donation.bikes))
+        setBikes(prevBikes => prevBikes + parseInt(donation.bikes))
+        setHours(prevHours => prevHours + parseInt(donation.hours))
       }
     })
-    props?.volunteer?.donations.forEach(donation => {
-      if (donation.approved) {
-        setHours(hours+parseInt(donation.hours))
-      }
-    })
-  });
+  }, []);
 
 
   const deleteData = async (e) => {
@@ -77,11 +73,6 @@ const Profile = (props) => {
     borderRadius : "10px",
     marginRight : "1%",
   }
-  const profile_buttons = {
-    display: 'flex',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-  }
 
   if (status === 'loading') {
     return <div>Authenticating ...</div>;
@@ -104,7 +95,6 @@ const Profile = (props) => {
             <p>Address: {props?.address}</p>
             <p>Radius: {props?.radius}</p>
             <p>Phone Number: {props?.phone}</p>
-            <p>Notes: {props?.notes}</p>
             <p>Number of bikes donated: {bikes}</p>
             <p>Number of hours volunteered: {hours}</p>
             {props?.approved ? (

@@ -130,12 +130,8 @@ const App = ({ location, volunteers }) => {
     })}
     location.donations.forEach(donation => {
       if (donation.approved) {
-        setLocBikes(locBikes+parseInt(donation.bikes))
-      }
-    })
-    location.donations.forEach(donation => {
-      if (donation.approved) {
-        setLocHours(locHours+parseInt(donation.hours))
+        setLocBikes(prevLocBikes => prevLocBikes + parseInt(donation.bikes))
+        setLocHours(prevLocHours => prevLocHours + parseInt(donation.hours))
       }
     })
   }
@@ -210,12 +206,8 @@ const App = ({ location, volunteers }) => {
                         setHours(0)
                         volCoord.donations.forEach(donation => {
                           if (donation.approved) {
-                            setBikes(bikes+parseInt(donation.bikes))
-                          }
-                        })
-                        volCoord.donations.forEach(donation => {
-                          if (donation.approved) {
-                            setHours(hours+parseInt(donation.hours))
+                            setBikes(prevBikes => prevBikes + parseInt(donation.bikes))
+                            setHours(prevHours => prevHours + parseInt(donation.hours))
                           }
                         })
                       }}

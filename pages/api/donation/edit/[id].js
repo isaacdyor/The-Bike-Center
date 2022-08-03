@@ -10,6 +10,7 @@ export default async function handle(req, res) {
       hours: hours,
       value: value,
       description: description,
+      approved: false,
     },
   });
   res.json(donation);

@@ -191,15 +191,11 @@ const App = ({ locations, volunteers }) => {
                         setVolSelected(volCoord);
                         setSelected(null)
                         setBikes(0)
-                        setHours((0))
+                        setHours(0)
                         volCoord.donations.forEach(donation => {
                           if (donation.approved) {
-                            setBikes(bikes+parseInt(donation.bikes))
-                          }
-                        })
-                        volCoord.donations.forEach(donation => {
-                          if (donation.approved) {
-                            setHours(hours+parseInt(donation.hours))
+                            setBikes(prevBikes => prevBikes + parseInt(donation.bikes))
+                            setHours(prevHours => prevHours + parseInt(donation.hours))
                           }
                         })
                       }}

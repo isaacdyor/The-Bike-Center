@@ -143,7 +143,7 @@ const Edit = ({ donation, locations }) => {
             value={description}
             style={donation_edit_entry}
           />
-          <input style={donation_edit_submit} disabled={!bikes || !hours } type="submit" value="Create" />
+          <input style={donation_edit_submit} disabled={!bikes || !hours } type="submit" value="Update" />
           <a style={donation_edit_cancel} className="back" href="#" onClick={() => Router.push('/')}>
             or Cancel
           </a>

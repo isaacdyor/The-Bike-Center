@@ -125,7 +125,7 @@ const App = ({ location, volunteers }) => {
     mapRef2.current = map
     setMapRef(map);
     convertLocation(location)
-    {volunteers.map(volunteer => {
+    {location.volunteers.map(volunteer => {
       convertVolunteer(volunteer)
     })}
     location.donations.forEach(donation => {

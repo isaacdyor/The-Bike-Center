@@ -42,7 +42,9 @@ const Volunteer = () => {
         <h1 style = {newvol_h1}>Successfully Signed Up As A Volunteer!!!</h1>
       </div>
       
-      <h4 style = {h4_styling}>When someone requests you to pick up a bike for them an email will be sent to the email address you logged in with.
+      <h4 style = {h4_styling}>We will review your application and once approved your icon will appear on the map.
+        When someone requests you to
+        pick up a bike for them an email will be sent to the email address you logged in with.
       You can also find a list of all of your assignments on the <Link href={`/volunteer/${session?.user?.id}`}><a style = {newvol_a}>Volunteer</a></Link> page.
       Once you have completed a donation you submit it at the <Link href={`/donation/${session?.user?.id}`}><a style = {newvol_a}>Donation</a></Link> page.</h4>
 

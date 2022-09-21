@@ -6,6 +6,7 @@ import Multiselect from 'multiselect-react-dropdown';
 import prisma from "../../lib/prisma";
 import {useLoadScript} from "@react-google-maps/api";
 import Button from "react-bootstrap/Button";
+import Script from 'next/script'
 
 const libraries = ['places']
 
@@ -199,12 +200,13 @@ const Volunteer = (props) => {
           onFocus={() => {setDescriptionSelected(true)}}
           onBlur={() => {setDescriptionSelected(false)}}
         />
-
+        <p>If you donated to bikeworks please fill out <a href="https://secure.lglforms.com/form_engine/s/3rvyNFKYL9G0EFr6Wcslrw">this form.</a></p>
         <input disabled={!bikes || !hours } type="submit" value="Submit" style={donation_submit}/>
         <a style = {donation_cancel} className="back" href="#" onClick={() => Router.push('/')}>
           Or Cancel
         </a>
       </form>
+      <Script id="bike-works-form" src="https://secure.lglforms.com/form_engine/s/3rvyNFKYL9G0EFr6Wcslrw.js"></Script>
     </div>
   )
 }
